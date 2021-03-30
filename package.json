@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "project",
   "main": "app.js",
-  "engine": {
+  "engines": {
     "node": "15.11.0",
     "npm": "7.6.0"
   },
