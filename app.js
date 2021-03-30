@@ -28,7 +28,7 @@ const start = async () => {
       useCreateIndex: true,
       useFindAndModify: true
     });
-    app.listen(5000, () => console.log(`App has been started on port ${PORT}...`));
+    app.listen(process.env.PORT || 5000, () => console.log(`Express server listening on port %d in %s mode`, this.address().port, app.settings.env));
   } catch (e) {
     console.log('Server error', e.message);
     process.exit(1);
