@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "project",
   "main": "app.js",
+  "engine": {
+    "node": "15.11.0",
+    "npm": "7.6.0"
+  },
   "scripts": {
     "start": "cross NODE_ENV=production node app.js",
     "server": "nodemon app.js",
