@@ -8,11 +8,11 @@
     "npm": "7.6.0"
   },
   "scripts": {
-    "start": "cross NODE_ENV=production node app.js",
+    "start": "node app.js",
     "server": "nodemon app.js",
     "client": "npm run start --prefix client",
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client",
-    "dev": "cross-env NODE_END=development concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "Maxim Zhestkov <mszhstkv@gmail.com>",
