@@ -1,11 +1,10 @@
-import {put, takeEvery} from 'redux-saga/effects';
-import {LOGOUT, setLoginData} from "../../auth-reducer";
-import {setFromRegister} from "../../register-reducer";
-import {errorNotification, successNotification} from "../../../components/ServerResponseNotification/Notification";
-
-function* logoutWatcher() {
-    yield takeEvery(LOGOUT, logoutWorker);
-}
+import { put, takeEvery } from 'redux-saga/effects';
+import { LOGOUT, setLoginData } from 'redux/actions/auth-actions';
+import { setFromRegister } from 'redux/actions/register-actions';
+import {
+    errorNotification,
+    successNotification
+} from 'common/ServerResponseNotification/Notification';
 
 function* logoutWorker() {
     try {
@@ -16,6 +15,10 @@ function* logoutWorker() {
     } catch (e) {
         errorNotification('Error', e.response.data.message);
     }
+}
+
+function* logoutWatcher() {
+    yield takeEvery(LOGOUT, logoutWorker);
 }
 
 export default logoutWatcher;

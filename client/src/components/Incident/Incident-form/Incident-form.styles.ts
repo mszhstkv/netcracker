@@ -1,13 +1,24 @@
-import { Button } from 'antd';
 import styled from 'styled-components';
+import { Button } from 'antd';
 
-export const CreateIncidentButton = styled(Button)`
+export const tailFormItemLayout = {
+    wrapperCol: {
+        xs: {
+            span: 12,
+            offset: 10
+        }
+    }
+};
+
+export const layout = {
+    labelCol: { span: 7, offset: 0 },
+    wrapperCol: { span: 17, offset: 0 }
+};
+
+export const IncidentFormButton = styled(Button)`
     background: #b07fb9;
     color: #fff;
     border: none;
-    margin-bottom: 20px;
-    margin-top: 0px;
-    float: right;
 
     &:hover {
         background: #b07fb9;

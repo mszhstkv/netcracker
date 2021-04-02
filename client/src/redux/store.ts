@@ -1,22 +1,22 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
-import authReducer from "./auth-reducer";
-import incidentReducer from "./incident-reducer";
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSagaMiddleWare from 'redux-saga';
-import rootSaga from "./saga/rootSaga";
-import registerReducer from "./register-reducer";
+import authReducer from 'redux/reducers/auth-reducer';
+import incidentReducer from 'redux/reducers/incident-reducer';
+import rootSaga from 'redux/saga/rootSaga';
+import registerReducer from 'redux/reducers/register-reducer';
 
-let reducers = combineReducers({
+const reducers = combineReducers({
     auth: authReducer,
     register: registerReducer,
     incident: incidentReducer
 });
 
 type ReducersType = typeof reducers;
-export type AppStateType = ReturnType<ReducersType>
+export type AppStateType = ReturnType<ReducersType>;
 
 const sagaMiddleware = createSagaMiddleWare();
 
-let store = createStore(reducers, applyMiddleware(sagaMiddleware));
+const store = createStore(reducers, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(rootSaga);
 

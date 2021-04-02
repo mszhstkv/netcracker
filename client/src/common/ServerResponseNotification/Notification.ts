@@ -1,15 +1,15 @@
-import {notification} from "antd";
+import { notification } from 'antd';
 
 export const errorNotification = (title: string, text: string): void => {
     notification.error({
         message: title,
-        description: text,
-    })
+        description: text
+    });
 };
 
 export const successNotification = (title: string, text: string): void => {
     notification.success({
         message: title,
         description: text
-    })
-}
+    });
+};
