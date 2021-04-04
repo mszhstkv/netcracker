@@ -11,50 +11,12 @@ import {
     setIncidentFormCreateValues,
     setIncidentFormEditValues
 } from 'redux/actions/incident-action';
-import { IncidentFormType, IncidentsType, UsersType } from 'common/types/types';
 import { AppStateType } from 'redux/store';
+import { IIncidentContainerProps } from 'components/Incident/interfaces/Incident.container.interfaces';
 
-type MapStatePropsType = {
-    users: Array<UsersType>;
-    incidents: Array<IncidentsType>;
-    incidentFormCreate: IncidentFormType;
-    incidentIsLoading: boolean;
-};
-
-type MapDispatchPropsType = {
-    getUsers: () => void;
-    getIncidents: () => void;
-    create: (
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: moment.Moment,
-        dueDate: moment.Moment,
-        description: string,
-        priority: string,
-        status: string
-    ) => void;
-    deleteIncident: (id: string) => void;
-    editIncident: (
-        _id: string,
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: moment.Moment,
-        dueDate: moment.Moment,
-        description: string,
-        priority: string,
-        status: string
-    ) => void;
-    setIncidentFormCreateValues: (value: IncidentsType) => void;
-    setIncidentFormEditValues: (value: IncidentsType) => void;
-};
-
-type PropsType = MapStatePropsType & MapDispatchPropsType;
-
-const IncidentContainer: FC<PropsType> = ({
+const IncidentContainer: FC<IIncidentContainerProps> = ({
     ...props
-}: PropsWithChildren<PropsType>) => {
+}: PropsWithChildren<IIncidentContainerProps>) => {
     useEffect((): void => {
         props.getUsers();
         props.getIncidents();

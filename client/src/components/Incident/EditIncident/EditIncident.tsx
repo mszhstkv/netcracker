@@ -2,34 +2,16 @@ import React, { FC, PropsWithChildren, useEffect } from 'react';
 import { Form } from 'antd';
 import moment from 'moment';
 import Loader from 'common/Loader/Loader';
-import { IncidentsType, UsersType } from 'common/types/types';
+import { IIncidents } from 'common/interfaces/interfaces';
 import IncidentForm from 'components/Incident/Incident-form/Incident-form';
+import { IEditIncidentProps } from 'components/Incident/EditIncident/interfaces/EditIncident.interface';
 
-type PropsType = {
-    incidentInfo: IncidentsType;
-    users: Array<UsersType>;
-    incidentIsLoading: boolean;
-    editIncident: (
-        _id: string,
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: moment.Moment,
-        dueDate: moment.Moment,
-        description: string,
-        priority: string,
-        status: string
-    ) => void;
-    disabledDate: (current: moment.Moment) => boolean;
-    setIncidentFormEditValues: (value: IncidentsType) => void;
-};
-
-const EditIncident: FC<PropsType> = ({
+const EditIncident: FC<IEditIncidentProps> = ({
     ...props
-}: PropsWithChildren<PropsType>) => {
+}: PropsWithChildren<IEditIncidentProps>) => {
     const [form] = Form.useForm();
 
-    const incident: IncidentsType = {
+    const incident: IIncidents = {
         _id: props.incidentInfo._id,
         incidentTitle: props.incidentInfo.incidentTitle,
         assignee: props.incidentInfo.assignee,
@@ -65,7 +47,7 @@ const EditIncident: FC<PropsType> = ({
         incident.status
     ]);
 
-    const onValuesChange = (value: IncidentsType): void => {
+    const onValuesChange = (value: IIncidents): void => {
         props.setIncidentFormEditValues(value);
     };
 

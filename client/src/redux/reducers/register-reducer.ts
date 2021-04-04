@@ -1,4 +1,4 @@
-import { RegisterFormType } from 'common/types/types';
+import { IRegisterForm } from 'common/interfaces/interfaces';
 import {
     ActionsType,
     REGISTER_FORM_VALUES,
@@ -16,7 +16,7 @@ const initState = {
         fullName: null,
         position: null,
         dateOfBirth: null
-    } as RegisterFormType
+    } as IRegisterForm
 };
 
 export type InitialStateType = typeof initState;

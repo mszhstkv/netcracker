@@ -4,25 +4,13 @@ import Auth from 'components/Auth/Auth';
 import { postLogin, setLoginFormValues } from 'redux/actions/auth-actions';
 import { setFromRegister } from 'redux/actions/register-actions';
 import { AppStateType } from 'redux/store';
-import { LoginFormType } from 'common/types/types';
+import { ILoginForm } from 'common/interfaces/interfaces';
+import { IAuthContainerProps } from 'components/Auth/interfaces/Auth.container.interfaces';
 
-type MapStatePropsType = {
-    loginForm: LoginFormType;
-    loginIsLoading: boolean;
-};
-
-type MapDispatchPropsType = {
-    setLoginFormValues: (value: LoginFormType) => void;
-    postLogin: (login: string, password: string) => void;
-    setFromRegister: (fromRegister: boolean) => void;
-};
-
-type PropsType = MapStatePropsType & MapDispatchPropsType;
-
-const AuthContainer: FC<PropsType> = ({
+const AuthContainer: FC<IAuthContainerProps> = ({
     ...props
-}: PropsWithChildren<PropsType>) => {
-    const onLoginFormValuesChange = (value: LoginFormType): void => {
+}: PropsWithChildren<IAuthContainerProps>) => {
+    const onLoginFormValuesChange = (value: ILoginForm): void => {
         props.setLoginFormValues(value);
     };
 

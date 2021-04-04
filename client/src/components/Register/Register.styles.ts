@@ -1,5 +1,17 @@
 import { Button, Typography } from 'antd';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+export const RegisterForm = createGlobalStyle`
+&.register-form {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
+}
+
+&.register-form_login-link {
+    color: black;
+}
+`;
 
 export const tailFormItemLayout = {
     wrapperCol: {

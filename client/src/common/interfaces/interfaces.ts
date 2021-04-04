@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { ReactElement } from 'react';
 
-export type IncidentsType = {
+export interface IIncidents {
     _id: string;
     area: string;
     assignee: string;
@@ -12,18 +12,18 @@ export type IncidentsType = {
     startDate: string;
     status: string;
     priorityIcon: ReactElement;
-};
+}
 
-export type UsersType = {
+export interface IUsers {
     _id: string;
     dateOfBirth: string;
     fullName: string;
     login: string;
     password: string;
     position: string;
-};
+}
 
-export type IncidentFormType = {
+export interface IIncidentForm {
     _id?: string | null | undefined;
     incidentTitle: string | null;
     assignee: string | null;
@@ -33,17 +33,17 @@ export type IncidentFormType = {
     description: string | null;
     priority: string | null;
     status: string | null;
-};
+}
 
-export type LoginFormType = {
+export interface ILoginForm {
     login: string | null;
     password: string | null;
-};
+}
 
-export type RegisterFormType = {
+export interface IRegisterForm {
     login: string | null;
     password: string | null;
     fullName: string | null;
     position: string | null;
     dateOfBirth: string | null;
-};
+}

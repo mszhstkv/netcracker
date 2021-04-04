@@ -1,5 +1,9 @@
 import moment from 'moment';
-import { IncidentFormType, IncidentsType, UsersType } from 'common/types/types';
+import {
+    IIncidentForm,
+    IIncidents,
+    IUsers
+} from 'common/interfaces/interfaces';
 import {
     ActionsType,
     INCIDENT_FORM_CREATE_VALUES,
@@ -10,8 +14,8 @@ import {
 } from 'redux/actions/incident-action';
 
 const initState = {
-    users: [] as Array<UsersType>,
-    incidents: [] as Array<IncidentsType>,
+    users: [] as Array<IUsers>,
+    incidents: [] as Array<IIncidents>,
     incidentIsLoading: false,
     incidentFormCreate: {
         incidentTitle: null,
@@ -22,7 +26,7 @@ const initState = {
         description: null,
         priority: null,
         status: null
-    } as IncidentFormType,
+    } as IIncidentForm,
     incidentFormEdit: {
         _id: null,
         incidentTitle: null,
@@ -33,7 +37,7 @@ const initState = {
         description: null,
         priority: null,
         status: null
-    } as IncidentFormType
+    } as IIncidentForm
 };
 
 export type InitialStateType = typeof initState;

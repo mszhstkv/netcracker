@@ -1,6 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { Popover, Space, Table } from 'antd';
-import moment from 'moment';
 import CreateIncident from 'components/Incident/CreateIncident/CreateIncident';
 import {
     BlockerSvg,
@@ -12,43 +11,12 @@ import {
 import EditIncident from 'components/Incident/EditIncident/EditIncident';
 import { ActionButton } from 'components/Incident/Incident.styles';
 import Loader from 'common/Loader/Loader';
-import { IncidentFormType, IncidentsType, UsersType } from 'common/types/types';
+import { IIncidents } from 'common/interfaces/interfaces';
+import { IIncidentProps } from 'components/Incident/interfaces/incident.interfaces';
 
-type PropsType = {
-    users: Array<UsersType>;
-    incidents: Array<IncidentsType>;
-    deleteIncident: (id: string) => void;
-    editIncident: (
-        _id: string,
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: moment.Moment,
-        dueDate: moment.Moment,
-        description: string,
-        priority: string,
-        status: string
-    ) => void;
-    disabledDate: (current: moment.Moment) => boolean;
-    setIncidentFormCreateValues: (value: IncidentsType) => void;
-    setIncidentFormEditValues: (value: IncidentsType) => void;
-    create: (
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: moment.Moment,
-        dueDate: moment.Moment,
-        description: string,
-        priority: string,
-        status: string
-    ) => void;
-    incidentFormCreate: IncidentFormType;
-    incidentIsLoading: boolean;
-};
-
-const Incident: FC<PropsType> = ({
+const Incident: FC<IIncidentProps> = ({
     ...props
-}: PropsWithChildren<PropsType>) => {
+}: PropsWithChildren<IIncidentProps>) => {
     const columns = [
         {
             title: '',
@@ -98,7 +66,7 @@ const Incident: FC<PropsType> = ({
         {
             title: 'Action',
             key: 'action',
-            render: (record: IncidentsType) => (
+            render: (record: IIncidents) => (
                 <Space size="middle">
                     <Popover
                         content={
@@ -131,7 +99,7 @@ const Incident: FC<PropsType> = ({
         }
     ];
     const data = props.incidents.map(
-        (incident: IncidentsType): IncidentsType => {
+        (incident: IIncidents): IIncidents => {
             const reformatIncident = { ...incident };
 
             const [startDate] = incident.startDate.split('T');

@@ -1,21 +1,17 @@
 import { Col, Row, Spin } from 'antd';
 import React, { FC } from 'react';
 import { LoadingOutlined } from '@ant-design/icons/lib';
+import { LoaderStyle } from 'common/Loader/Loader.styles';
 
-const loaderIcon = (
-    <LoadingOutlined style={{ fontSize: 50, color: '#b07fb9' }} spin />
-);
+const loaderIcon = <LoadingOutlined className="loader-icon" spin />;
 
 const Loader: FC = () => (
     <>
-        <Row
-            justify="space-around"
-            align="middle"
-            style={{ marginTop: 'calc(50vh - 129px)' }}
-        >
+        <LoaderStyle />
+        <Row justify="space-around" align="middle" className="loader-style">
             <Col>
                 <Spin
-                    style={{ color: 'black' }}
+                    className="loader-spin-style"
                     size="large"
                     indicator={loaderIcon}
                 />

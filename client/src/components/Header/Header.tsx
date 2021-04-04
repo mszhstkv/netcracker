@@ -9,13 +9,11 @@ import {
     headerLayoutTitle,
     headerLayoutLoginAndButton
 } from 'components/Header/Header.styles';
+import { IHeaderProps } from 'components/Header/interfaces/Header.interfaces';
 
-type PropsType = {
-    userLogin: string | null;
-    logout: () => void;
-};
-
-const Header: FC<PropsType> = ({ ...props }: PropsWithChildren<PropsType>) => (
+const Header: FC<IHeaderProps> = ({
+    ...props
+}: PropsWithChildren<IHeaderProps>) => (
     <StyledHeader>
         <Row>
             <Col {...headerLayoutTitle}>

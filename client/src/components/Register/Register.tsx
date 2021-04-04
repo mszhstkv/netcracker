@@ -1,39 +1,24 @@
 import React, { FC, PropsWithChildren, useEffect } from 'react';
 import { Col, DatePicker, Form, Input, Row } from 'antd';
 import { NavLink, Redirect } from 'react-router-dom';
-import moment from 'moment';
 import {
     formItemLayout,
     formLayout,
     LoginButton,
     RegisterButton,
+    RegisterForm,
     tailFormItemLayout,
     Title
 } from 'components/Register/Register.styles';
 import Loader from 'common/Loader/Loader';
-import { RegisterFormType } from 'common/types/types';
+import { IRegisterProps } from 'components/Register/interfaces/Register.interfaces';
 
 const minLengthLogin: number = 3;
 const minLengthPassword: number = 6;
 
-type PropsType = {
-    fromRegister: boolean;
-    onRegisterFormValuesChange: (value: RegisterFormType) => void;
-    onFinish: (values: {
-        login: string;
-        password: string;
-        fullName: string;
-        dateOfBirth: string;
-        position: string;
-    }) => void;
-    registerForm: RegisterFormType;
-    registerIsLoading: boolean;
-    disabledDate: (current: moment.Moment) => boolean;
-};
-
-const Register: FC<PropsType> = ({
+const Register: FC<IRegisterProps> = ({
     ...props
-}: PropsWithChildren<PropsType>) => {
+}: PropsWithChildren<IRegisterProps>) => {
     const [form] = Form.useForm();
 
     useEffect((): void => {
@@ -51,15 +36,12 @@ const Register: FC<PropsType> = ({
     return (
         <Row>
             <Col {...formLayout}>
+                <RegisterForm />
                 <Form
                     {...formItemLayout}
                     name="register"
                     form={form}
-                    style={{
-                        background: '#fff',
-                        borderRadius: '5px',
-                        boxShadow: '0px 0px 10px 4px rgba(34, 60, 80, 0.2)'
-                    }}
+                    className="register-form"
                     scrollToFirstError
                     onValuesChange={props.onRegisterFormValuesChange}
                     onFinish={props.onFinish}
@@ -157,7 +139,7 @@ const Register: FC<PropsType> = ({
                                 <LoginButton>
                                     <NavLink
                                         to="/login"
-                                        style={{ color: 'black' }}
+                                        className="register-form_login-link"
                                     >
                                         Login
                                     </NavLink>

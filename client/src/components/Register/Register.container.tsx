@@ -7,34 +7,16 @@ import {
 } from 'redux/actions/register-actions';
 import Register from 'components/Register/Register';
 import { AppStateType } from 'redux/store';
-import { RegisterFormType } from 'common/types/types';
+import { IRegisterForm } from 'common/interfaces/interfaces';
+import { IRegisterContainerProps } from 'components/Register/interfaces/Register.container.interfaces';
 
-type MapStatePropsType = {
-    fromRegister: boolean;
-    registerForm: RegisterFormType;
-    registerIsLoading: boolean;
-};
-
-type MapDispatchPropsType = {
-    register: (
-        login: string,
-        password: string,
-        fullName: string,
-        dateOfBirth: string,
-        position: string
-    ) => void;
-    setRegisterFormValues: (value: RegisterFormType) => void;
-};
-
-type PropsType = MapStatePropsType & MapDispatchPropsType;
-
-const RegisterContainer: FC<PropsType> = ({
+const RegisterContainer: FC<IRegisterContainerProps> = ({
     ...props
-}: PropsWithChildren<PropsType>) => {
+}: PropsWithChildren<IRegisterContainerProps>) => {
     const disabledDate = (current: moment.Moment): boolean =>
         current && current > moment().startOf('day');
 
-    const onRegisterFormValuesChange = (value: RegisterFormType): void => {
+    const onRegisterFormValuesChange = (value: IRegisterForm): void => {
         props.setRegisterFormValues(value);
     };
 

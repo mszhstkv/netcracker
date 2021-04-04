@@ -1,6 +1,16 @@
 import axios from 'axios';
 import moment from 'moment';
-import { IncidentsType, UsersType } from 'common/types/types';
+import { IIncidents, IUsers } from 'common/interfaces/interfaces';
+import {
+    ICreateData,
+    IDeleteIncidentData,
+    IEditIncidentData,
+    ILoginData,
+    IRegisterData
+} from 'api/api.interfaces';
+
+type GetIncidentsDataType = Array<IIncidents>;
+type GetUsersDataType = Array<IUsers>;
 
 const instance = axios.create({
     withCredentials: true,
@@ -11,15 +21,6 @@ const instance = axios.create({
     }
 });
 
-type LoginDataType = {
-    userId: string;
-    userLogin: string;
-    token: string;
-};
-type RegisterDataType = {
-    message: string;
-};
-
 export const authAPI = {
     register(
         login: string,
@@ -28,7 +29,7 @@ export const authAPI = {
         dateOfBirth: string,
         position: string
     ) {
-        return instance.post<RegisterDataType>('auth/register', {
+        return instance.post<IRegisterData>('auth/register', {
             login,
             password,
             fullName,
@@ -38,27 +39,14 @@ export const authAPI = {
     },
 
     login(login: string, password: string) {
-        return instance.post<LoginDataType>('auth/login', { login, password });
+        return instance.post<ILoginData>('auth/login', { login, password });
     }
 };
-
-type GetUsersDataType = Array<UsersType>;
 
 export const usersAPI = {
     getUsers() {
         return instance.get<GetUsersDataType>('users/allUsers');
     }
-};
-
-type CreateDataType = {
-    message: string;
-};
-type GetIncidentsDataType = Array<IncidentsType>;
-type DeleteIncidentDataType = {
-    message: string;
-};
-type EditIncidentDataType = {
-    message: string;
 };
 
 export const incidentAPI = {
@@ -72,7 +60,7 @@ export const incidentAPI = {
         priority: string,
         status: string
     ) {
-        return instance.post<CreateDataType>('incident/create', {
+        return instance.post<ICreateData>('incident/create', {
             incidentTitle,
             assignee,
             area,
@@ -89,7 +77,7 @@ export const incidentAPI = {
     },
 
     deleteIncident(id: string) {
-        return instance.delete<DeleteIncidentDataType>(
+        return instance.delete<IDeleteIncidentData>(
             `incident/allIncidents/${id}`
         );
     },
@@ -105,7 +93,7 @@ export const incidentAPI = {
         priority: string,
         status: string
     ) {
-        return instance.put<EditIncidentDataType>('incident/allIncidents/', {
+        return instance.put<IEditIncidentData>('incident/allIncidents/', {
             _id,
             incidentTitle,
             assignee,

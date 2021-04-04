@@ -4,37 +4,20 @@ import { PlusOutlined } from '@ant-design/icons/lib';
 import moment from 'moment';
 import { CreateIncidentButton } from 'components/Incident/CreateIncident/CreateIncident.styles';
 import Loader from 'common/Loader/Loader';
-import { IncidentFormType, IncidentsType, UsersType } from 'common/types/types';
+import { IIncidents } from 'common/interfaces/interfaces';
 import IncidentForm from 'components/Incident/Incident-form/Incident-form';
+import { ICreateIncidentProps } from 'components/Incident/CreateIncident/interfaces/CreateIncident.interfaces';
 
-type PropsType = {
-    users: Array<UsersType>;
-    create: (
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: moment.Moment,
-        dueDate: moment.Moment,
-        description: string,
-        priority: string,
-        status: string
-    ) => void;
-    disabledDate: (current: moment.Moment) => boolean;
-    setIncidentFormCreateValues: (value: IncidentsType) => void;
-    incidentFormCreate: IncidentFormType;
-    incidentIsLoading: boolean;
-};
-
-const CreateIncident: FC<PropsType> = ({
+const CreateIncident: FC<ICreateIncidentProps> = ({
     ...props
-}: PropsWithChildren<PropsType>) => {
+}: PropsWithChildren<ICreateIncidentProps>) => {
     const [form] = Form.useForm();
 
     useEffect((): void => {
         form.setFieldsValue({ ...props.incidentFormCreate });
     }, [props.incidentFormCreate]);
 
-    const onValuesChange = (value: IncidentsType) => {
+    const onValuesChange = (value: IIncidents) => {
         props.setIncidentFormCreateValues(value);
     };
 

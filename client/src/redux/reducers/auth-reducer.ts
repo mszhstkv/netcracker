@@ -1,4 +1,4 @@
-import { LoginFormType } from 'common/types/types';
+import { ILoginForm } from 'common/interfaces/interfaces';
 import {
     ActionsType,
     LOGIN_FORM_VALUES,
@@ -15,7 +15,7 @@ const initState = {
     loginForm: {
         login: null,
         password: null
-    } as LoginFormType
+    } as ILoginForm
 };
 
 export type InitialStateType = typeof initState;

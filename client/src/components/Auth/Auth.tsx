@@ -6,6 +6,7 @@ import {
     formLayout,
     layout,
     LoginButton,
+    LoginForm,
     loginLayout,
     RegisterButton,
     tailLayout,
@@ -13,17 +14,9 @@ import {
     titleLayout
 } from 'components/Auth/Auth.styles';
 import Loader from 'common/Loader/Loader';
-import { LoginFormType } from 'common/types/types';
+import { IAuthProps } from 'components/Auth/interfaces/Auth.interfaces';
 
-type PropsType = {
-    onLoginFormValuesChange: (value: LoginFormType) => void;
-    loginForm: LoginFormType;
-    onFinish: (values: { login: string; password: string }) => void;
-    fromRegisterReset: () => void;
-    loginIsLoading: boolean;
-};
-
-const Auth: FC<PropsType> = ({ ...props }: PropsWithChildren<PropsType>) => {
+const Auth: FC<IAuthProps> = ({ ...props }: PropsWithChildren<IAuthProps>) => {
     const [form] = Form.useForm();
 
     useEffect((): void => {
@@ -37,12 +30,9 @@ const Auth: FC<PropsType> = ({ ...props }: PropsWithChildren<PropsType>) => {
     return (
         <Row>
             <Col {...loginLayout}>
+                <LoginForm />
                 <Form
-                    style={{
-                        background: '#fff',
-                        borderRadius: '5px',
-                        boxShadow: '0px 0px 10px 4px rgba(34, 60, 80, 0.2)'
-                    }}
+                    className="login-form"
                     {...layout}
                     name="loginForm"
                     onFinish={props.onFinish}
@@ -53,20 +43,20 @@ const Auth: FC<PropsType> = ({ ...props }: PropsWithChildren<PropsType>) => {
                         <Col {...titleLayout}>
                             <Title>
                                 Manage your incidents{' '}
-                                <DiffFilled style={{ color: '#b07fb9' }} />{' '}
+                                <DiffFilled className="login-form_title-icon" />
                             </Title>
                         </Col>
                         <Col {...formLayout}>
                             <Form.Item
                                 label="Login"
                                 name="login"
+                                className="login-form_item_login"
                                 rules={[
                                     {
                                         required: true,
                                         message: 'Please input your login'
                                     }
                                 ]}
-                                style={{ paddingTop: '10px' }}
                             >
                                 <Input
                                     placeholder="Enter your login"
@@ -98,7 +88,7 @@ const Auth: FC<PropsType> = ({ ...props }: PropsWithChildren<PropsType>) => {
                                     <RegisterButton>
                                         <NavLink
                                             to="/register"
-                                            style={{ color: 'black' }}
+                                            className="login-form_register-link"
                                             onClick={props.fromRegisterReset}
                                         >
                                             Register

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { IncidentsType, UsersType } from 'common/types/types';
+import { IIncidents, IUsers } from 'common/interfaces/interfaces';
 
 export const SET_USERS = 'SET_USERS';
 export const SET_INCIDENTS = 'SET_INCIDENTS';
@@ -13,34 +13,34 @@ export const INCIDENT_FORM_EDIT_VALUES = 'INCIDENT_FORM_EDIT_VALUES';
 export const INCIDENT_IS_LOADING = 'INCIDENT_IS_LOADING';
 
 export type ActionsType =
-    | SetUsersActionType
-    | SetIncidentsActionType
-    | SetIncidentFormCreateValuesActionType
-    | SetIncidentFormEditValuesActionType
-    | SetIncidentIsLoadingActionType;
+    | ISetUsersAction
+    | ISetIncidentsAction
+    | ISetIncidentFormCreateValuesAction
+    | ISetIncidentFormEditValuesAction
+    | ISetIncidentIsLoadingAction;
 
-type SetUsersActionType = {
+interface ISetUsersAction {
     type: typeof SET_USERS;
-    users: Array<UsersType>;
-};
-type SetIncidentsActionType = {
+    users: Array<IUsers>;
+}
+interface ISetIncidentsAction {
     type: typeof SET_INCIDENTS;
-    incidents: Array<IncidentsType>;
-};
-type SetIncidentFormCreateValuesActionType = {
+    incidents: Array<IIncidents>;
+}
+interface ISetIncidentFormCreateValuesAction {
     type: typeof INCIDENT_FORM_CREATE_VALUES;
-    value: IncidentsType;
-};
-type SetIncidentFormEditValuesActionType = {
+    value: IIncidents;
+}
+interface ISetIncidentFormEditValuesAction {
     type: typeof INCIDENT_FORM_EDIT_VALUES;
-    value: IncidentsType;
-};
-type SetIncidentIsLoadingActionType = {
+    value: IIncidents;
+}
+interface ISetIncidentIsLoadingAction {
     type: typeof INCIDENT_IS_LOADING;
     incidentIsLoading: boolean;
-};
+}
 
-type CreateType = {
+interface ICreateIncident {
     type: typeof POST_CREATE;
     incidentTitle: string;
     assignee: string;
@@ -50,12 +50,12 @@ type CreateType = {
     description: string;
     priority: string;
     status: string;
-};
-type DeleteIncidentType = {
+}
+interface IDeleteIncident {
     type: typeof DELETE_INCIDENT;
     id: string;
-};
-type EditIncidentType = {
+}
+interface IEditIncident {
     type: typeof PUT_EDIT_INCIDENT;
     _id: string;
     incidentTitle: string;
@@ -66,33 +66,33 @@ type EditIncidentType = {
     description: string;
     priority: string;
     status: string;
-};
+}
 
 export const setIncidentFormCreateValues = (
-    value: IncidentsType
-): SetIncidentFormCreateValuesActionType => ({
+    value: IIncidents
+): ISetIncidentFormCreateValuesAction => ({
     type: INCIDENT_FORM_CREATE_VALUES,
     value
 });
 export const setIncidentFormEditValues = (
-    value: IncidentsType
-): SetIncidentFormEditValuesActionType => ({
+    value: IIncidents
+): ISetIncidentFormEditValuesAction => ({
     type: INCIDENT_FORM_EDIT_VALUES,
     value
 });
-export const setUsers = (users: Array<UsersType>): SetUsersActionType => ({
+export const setUsers = (users: Array<IUsers>): ISetUsersAction => ({
     type: SET_USERS,
     users
 });
 export const setIncidents = (
-    incidents: Array<IncidentsType>
-): SetIncidentsActionType => ({
+    incidents: Array<IIncidents>
+): ISetIncidentsAction => ({
     type: SET_INCIDENTS,
     incidents
 });
 export const setIncidentIsLoading = (
     incidentIsLoading: boolean
-): SetIncidentIsLoadingActionType => ({
+): ISetIncidentIsLoadingAction => ({
     type: INCIDENT_IS_LOADING,
     incidentIsLoading
 });
@@ -108,7 +108,7 @@ export const createIncident = (
     description: string,
     priority: string,
     status: string
-): CreateType => ({
+): ICreateIncident => ({
     type: POST_CREATE,
     incidentTitle,
     assignee,
@@ -119,7 +119,7 @@ export const createIncident = (
     priority,
     status
 });
-export const deleteIncident = (id: string): DeleteIncidentType => ({
+export const deleteIncident = (id: string): IDeleteIncident => ({
     type: DELETE_INCIDENT,
     id
 });
@@ -133,7 +133,7 @@ export const editIncident = (
     description: string,
     priority: string,
     status: string
-): EditIncidentType => ({
+): IEditIncident => ({
     type: PUT_EDIT_INCIDENT,
     _id,
     incidentTitle,

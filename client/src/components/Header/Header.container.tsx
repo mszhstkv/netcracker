@@ -3,20 +3,11 @@ import { connect } from 'react-redux';
 import Header from 'components/Header/Header';
 import { logout } from 'redux/actions/auth-actions';
 import { AppStateType } from 'redux/store';
+import { IHeaderContainerProps } from 'components/Header/interfaces/Header.container.interfaces';
 
-type MapStatePropsType = {
-    userLogin: string | null;
-};
-
-type MapDispatchPropsType = {
-    logout: () => void;
-};
-
-type PropsType = MapStatePropsType & MapDispatchPropsType;
-
-const HeaderContainer: FC<PropsType> = ({
+const HeaderContainer: FC<IHeaderContainerProps> = ({
     ...props
-}: PropsWithChildren<PropsType>) => (
+}: PropsWithChildren<IHeaderContainerProps>) => (
     <Header userLogin={props.userLogin} logout={props.logout} />
 );
 

@@ -8,24 +8,11 @@ import HeaderContainer from 'components/Header/Header.container';
 import { setLoginData } from 'redux/actions/auth-actions';
 import { AppStateType } from 'redux/store';
 import { Content } from 'app/App.styles';
+import { IDataObject, IProps } from 'app/app.interfaces';
 
-type MapStatePropsType = {
-    isAuthenticated: string | null;
-};
-
-type PropsType = MapStatePropsType;
-
-type DataObjectType = {
-    token: string | null;
-    userId: string | null;
-    userLogin: string | null;
-};
-
-const App: FC<PropsType> = ({
-    isAuthenticated
-}: PropsWithChildren<PropsType>) => {
+const App: FC<IProps> = ({ isAuthenticated }: PropsWithChildren<IProps>) => {
     const dispatch = useDispatch();
-    let dataObject: DataObjectType;
+    let dataObject: IDataObject;
 
     useEffect(() => {
         const data: string | null = localStorage.getItem('userData');

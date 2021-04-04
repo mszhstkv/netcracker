@@ -1,7 +1,7 @@
 import React, { FC, PropsWithChildren, ReactElement } from 'react';
 import { DatePicker, Form, Input, Select, Space } from 'antd';
 import moment from 'moment';
-import { IncidentsType, UsersType } from 'common/types/types';
+import { IUsers } from 'common/interfaces/interfaces';
 import {
     BlockerSvg,
     CriticalSvg,
@@ -18,42 +18,21 @@ import {
     tailFormItemLayout,
     layout
 } from 'components/Incident/Incident-form/Incident-form.styles';
+import { IIncidentFormProps } from 'components/Incident/Incident-form/interfaces/Incident-form.interface';
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-type PropsType = {
-    formName: string;
-    onFinish: (values: {
-        incidentTitle: string;
-        assignee: string;
-        area: string;
-        dueDate: moment.Moment;
-        description: string;
-        priority: string;
-        status: string;
-    }) => void;
-    onValuesChange: (value: IncidentsType) => void;
-    incident?: IncidentsType | undefined;
-    disabledDate: (current: moment.Moment) => boolean;
-    users: Array<UsersType>;
-};
-
 let buttonText: string = '';
 
-const IncidentForm: FC<PropsType> = ({
-    formName,
-    onFinish,
-    onValuesChange,
-    incident,
-    disabledDate,
-    users
-}: PropsWithChildren<PropsType>) => {
+const IncidentForm: FC<IIncidentFormProps> = ({
+    ...props
+}: PropsWithChildren<IIncidentFormProps>) => {
     const [form] = Form.useForm();
 
-    if (formName === 'create') {
+    if (props.formName === 'create') {
         buttonText = 'Create';
-    } else if (formName === 'edit') {
+    } else if (props.formName === 'edit') {
         buttonText = 'Edit';
     }
 
@@ -68,8 +47,8 @@ const IncidentForm: FC<PropsType> = ({
         priority: ''
     };
 
-    if (incident !== undefined) {
-        initialValuesForm = { ...incident };
+    if (props.incident !== undefined) {
+        initialValuesForm = { ...props.incident };
         initialValuesForm.dueDate = moment(initialValuesForm.dueDate);
         initialValuesForm.startDate = moment(initialValuesForm.startDate);
     } else {
@@ -80,11 +59,11 @@ const IncidentForm: FC<PropsType> = ({
         <Form
             form={form}
             {...layout}
-            name={formName}
-            onFinish={onFinish}
+            name={props.formName}
+            onFinish={props.onFinish}
             scrollToFirstError
             initialValues={{ remember: true }}
-            onValuesChange={onValuesChange}
+            onValuesChange={props.onValuesChange}
         >
             <Form.Item
                 name="incidentTitle"
@@ -106,8 +85,8 @@ const IncidentForm: FC<PropsType> = ({
                 initialValue={initialValuesForm.assignee}
             >
                 <Select placeholder="Select assigner" allowClear>
-                    {users.map(
-                        (user: UsersType): ReactElement => {
+                    {props.users.map(
+                        (user: IUsers): ReactElement => {
                             const userValue = `${user.fullName} | ${user.login}`;
                             return (
                                 <Option key={user._id} value={userValue}>
@@ -145,7 +124,7 @@ const IncidentForm: FC<PropsType> = ({
                 rules={[{ required: true, message: 'Please select due date' }]}
                 initialValue={initialValuesForm.dueDate}
             >
-                <DatePicker disabledDate={disabledDate} />
+                <DatePicker disabledDate={props.disabledDate} />
             </Form.Item>
             <Form.Item
                 name="description"
