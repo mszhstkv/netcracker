@@ -1,7 +1,7 @@
 import { put, call, takeEvery, SagaReturnType } from 'redux-saga/effects';
 import { authAPI } from 'api/api';
 import {
-    POST_REGISTER,
+    REGISTER_DATA_SEND,
     setFromRegister,
     setRegisterIsLoading
 } from 'redux/actions/register-actions';
@@ -12,14 +12,16 @@ import {
 
 type RegisterResponseType = SagaReturnType<typeof authAPI.register>;
 
-function* postRegisterWorker(params: {
+interface RegisterWorker {
     type: string;
     login: string;
     password: string;
     fullName: string;
     dateOfBirth: string;
     position: string;
-}) {
+}
+
+function* postRegisterWorker(params: RegisterWorker) {
     try {
         yield put(setRegisterIsLoading(true));
         const response: RegisterResponseType = yield call(
@@ -42,7 +44,7 @@ function* postRegisterWorker(params: {
 }
 
 function* registerWatcher() {
-    yield takeEvery(POST_REGISTER, postRegisterWorker);
+    yield takeEvery(REGISTER_DATA_SEND, postRegisterWorker);
 }
 
 export default registerWatcher;

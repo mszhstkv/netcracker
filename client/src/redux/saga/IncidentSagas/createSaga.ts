@@ -1,7 +1,7 @@
 import { put, call, takeEvery, SagaReturnType } from 'redux-saga/effects';
 import { incidentAPI } from 'api/api';
 import {
-    POST_CREATE,
+    CREATE_INCIDENT_SEND,
     getIncidents,
     setIncidentIsLoading
 } from 'redux/actions/incident-action';
@@ -14,7 +14,7 @@ type CreateIncidentResponseType = SagaReturnType<
     typeof incidentAPI.createIncident
 >;
 
-function* createWorker(params: {
+interface CreateWorker {
     type: string;
     incidentTitle: string;
     assignee: string;
@@ -24,7 +24,9 @@ function* createWorker(params: {
     description: string;
     priority: string;
     status: string;
-}) {
+}
+
+function* createWorker(params: CreateWorker) {
     try {
         yield put(setIncidentIsLoading(true));
         const response: CreateIncidentResponseType = yield call(
@@ -49,7 +51,7 @@ function* createWorker(params: {
 }
 
 function* createWatcher() {
-    yield takeEvery(POST_CREATE, createWorker);
+    yield takeEvery(CREATE_INCIDENT_SEND, createWorker);
 }
 
 export default createWatcher;

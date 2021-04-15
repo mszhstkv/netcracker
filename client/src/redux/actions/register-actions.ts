@@ -1,29 +1,19 @@
-import { IRegisterForm } from 'common/interfaces/interfaces';
-
 export const SET_FROM_REGISTER = 'SET_FROM_REGISTER';
-export const POST_REGISTER = 'POST_REGISTER';
-export const REGISTER_FORM_VALUES = 'REGISTER_FORM_VALUES';
-export const REGISTER_IS_LOADING = 'REGISTER_IS_LOADING';
+export const REGISTER_DATA_SEND = 'REGISTER_DATA_SEND';
+export const REGISTER_DATA_LOADING = 'REGISTER_DATA_LOADING';
 
-export type ActionsType =
-    | ISetFromRegisterAction
-    | ISetRegisterFormValuesAction
-    | ISetRegisterIsLoadingAction;
+export type ActionsType = SetFromRegisterAction | SetRegisterIsLoadingAction;
 
-interface ISetFromRegisterAction {
+interface SetFromRegisterAction {
     type: typeof SET_FROM_REGISTER;
     fromRegister: boolean;
 }
-interface ISetRegisterFormValuesAction {
-    type: typeof REGISTER_FORM_VALUES;
-    value: IRegisterForm;
-}
-interface ISetRegisterIsLoadingAction {
-    type: typeof REGISTER_IS_LOADING;
+interface SetRegisterIsLoadingAction {
+    type: typeof REGISTER_DATA_LOADING;
     registerIsLoading: boolean;
 }
-interface IRegister {
-    type: typeof POST_REGISTER;
+interface RegisterAction {
+    type: typeof REGISTER_DATA_SEND;
     login: string;
     password: string;
     fullName: string;
@@ -33,19 +23,14 @@ interface IRegister {
 
 export const setRegisterIsLoading = (
     registerIsLoading: boolean
-): ISetRegisterIsLoadingAction => ({
-    type: REGISTER_IS_LOADING,
+): SetRegisterIsLoadingAction => ({
+    type: REGISTER_DATA_LOADING,
     registerIsLoading
 });
-export const setRegisterFormValues = (
-    value: IRegisterForm
-): ISetRegisterFormValuesAction => ({
-    type: REGISTER_FORM_VALUES,
-    value
-});
+
 export const setFromRegister = (
     fromRegister: boolean
-): ISetFromRegisterAction => ({
+): SetFromRegisterAction => ({
     type: SET_FROM_REGISTER,
     fromRegister
 });
@@ -55,8 +40,8 @@ export const register = (
     fullName: string,
     dateOfBirth: string,
     position: string
-): IRegister => ({
-    type: POST_REGISTER,
+): RegisterAction => ({
+    type: REGISTER_DATA_SEND,
     login,
     password,
     fullName,

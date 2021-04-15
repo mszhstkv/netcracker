@@ -7,16 +7,14 @@ import {
     createIncident,
     getIncidents,
     deleteIncident,
-    editIncident,
-    setIncidentFormCreateValues,
-    setIncidentFormEditValues
+    editIncident
 } from 'redux/actions/incident-action';
 import { AppStateType } from 'redux/store';
-import { IIncidentContainerProps } from 'components/Incident/interfaces/Incident.container.interfaces';
+import { IncidentContainerProps } from 'components/Incident/interfaces/Incident.container.interfaces';
 
-const IncidentContainer: FC<IIncidentContainerProps> = ({
+const IncidentContainer: FC<IncidentContainerProps> = ({
     ...props
-}: PropsWithChildren<IIncidentContainerProps>) => {
+}: PropsWithChildren<IncidentContainerProps>) => {
     useEffect((): void => {
         props.getUsers();
         props.getIncidents();
@@ -30,12 +28,9 @@ const IncidentContainer: FC<IIncidentContainerProps> = ({
             users={props.users}
             deleteIncident={props.deleteIncident}
             incidents={props.incidents}
-            create={props.create}
+            createIncident={props.createIncident}
             editIncident={props.editIncident}
             disabledDate={disabledDate}
-            setIncidentFormCreateValues={props.setIncidentFormCreateValues}
-            setIncidentFormEditValues={props.setIncidentFormEditValues}
-            incidentFormCreate={props.incidentFormCreate}
             incidentIsLoading={props.incidentIsLoading}
         />
     );
@@ -44,16 +39,13 @@ const IncidentContainer: FC<IIncidentContainerProps> = ({
 const mapStateToProps = (state: AppStateType) => ({
     users: state.incident.users,
     incidents: state.incident.incidents,
-    incidentFormCreate: state.incident.incidentFormCreate,
     incidentIsLoading: state.incident.incidentIsLoading
 });
 
 export default connect(mapStateToProps, {
     getUsers,
     getIncidents,
-    create: createIncident,
+    createIncident,
     deleteIncident,
-    editIncident,
-    setIncidentFormCreateValues,
-    setIncidentFormEditValues
+    editIncident
 })(IncidentContainer);

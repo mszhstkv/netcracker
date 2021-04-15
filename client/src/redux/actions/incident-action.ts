@@ -1,62 +1,57 @@
 import moment from 'moment';
-import { IIncidents, IUsers } from 'common/interfaces/interfaces';
+import {
+    CreateIncident,
+    EditIncident,
+    Incidents,
+    Users
+} from 'common/interfaces/interfaces';
 
-export const SET_USERS = 'SET_USERS';
-export const SET_INCIDENTS = 'SET_INCIDENTS';
-export const GET_USERS = 'GET_USERS';
-export const GET_INCIDENTS = 'GET_INCIDENTS';
-export const POST_CREATE = 'POST_CREATE';
-export const DELETE_INCIDENT = 'DELETE_INCIDENT';
-export const PUT_EDIT_INCIDENT = 'PUT_EDIT_INCIDENT';
-export const INCIDENT_FORM_CREATE_VALUES = 'INCIDENT_FORM_CREATE_VALUES';
-export const INCIDENT_FORM_EDIT_VALUES = 'INCIDENT_FORM_EDIT_VALUES';
-export const INCIDENT_IS_LOADING = 'INCIDENT_IS_LOADING';
+export const SET_USERS_DATA = 'SET_USERS_DATA';
+export const SET_INCIDENTS_DATA = 'SET_INCIDENTS_DATA';
+export const GET_USERS_DATA = 'GET_USERS_DATA';
+export const GET_INCIDENTS_DATA = 'GET_INCIDENTS_DATA';
+export const CREATE_INCIDENT_SEND = 'CREATE_INCIDENT_SEND';
+export const DELETE_INCIDENT_SEND = 'DELETE_INCIDENT_SEND';
+export const EDIT_INCIDENT_SEND = 'PUT_EDIT_INCIDENT_SEND';
+export const INCIDENT_DATA_LOADING = 'INCIDENT_DATA_LOADING';
 
 export type ActionsType =
-    | ISetUsersAction
-    | ISetIncidentsAction
-    | ISetIncidentFormCreateValuesAction
-    | ISetIncidentFormEditValuesAction
-    | ISetIncidentIsLoadingAction;
+    | SetUsersAction
+    | SetIncidentsAction
+    | SetIncidentIsLoadingAction;
 
-interface ISetUsersAction {
-    type: typeof SET_USERS;
-    users: Array<IUsers>;
+interface SetUsersAction {
+    type: typeof SET_USERS_DATA;
+    users: Users[];
 }
-interface ISetIncidentsAction {
-    type: typeof SET_INCIDENTS;
-    incidents: Array<IIncidents>;
+
+interface SetIncidentsAction {
+    type: typeof SET_INCIDENTS_DATA;
+    incidents: Incidents[];
 }
-interface ISetIncidentFormCreateValuesAction {
-    type: typeof INCIDENT_FORM_CREATE_VALUES;
-    value: IIncidents;
-}
-interface ISetIncidentFormEditValuesAction {
-    type: typeof INCIDENT_FORM_EDIT_VALUES;
-    value: IIncidents;
-}
-interface ISetIncidentIsLoadingAction {
-    type: typeof INCIDENT_IS_LOADING;
+
+interface SetIncidentIsLoadingAction {
+    type: typeof INCIDENT_DATA_LOADING;
     incidentIsLoading: boolean;
 }
 
-interface ICreateIncident {
-    type: typeof POST_CREATE;
+interface CreateIncidentAction {
+    type: typeof CREATE_INCIDENT_SEND;
     incidentTitle: string;
     assignee: string;
     area: string;
-    startDate: moment.Moment;
-    dueDate: moment.Moment;
+    startDate: moment.Moment | string;
+    dueDate: moment.Moment | string;
     description: string;
     priority: string;
     status: string;
 }
-interface IDeleteIncident {
-    type: typeof DELETE_INCIDENT;
+interface DeleteIncident {
+    type: typeof DELETE_INCIDENT_SEND;
     id: string;
 }
-interface IEditIncident {
-    type: typeof PUT_EDIT_INCIDENT;
+interface EditIncidentAction {
+    type: typeof EDIT_INCIDENT_SEND;
     _id: string;
     incidentTitle: string;
     assignee: string;
@@ -68,48 +63,34 @@ interface IEditIncident {
     status: string;
 }
 
-export const setIncidentFormCreateValues = (
-    value: IIncidents
-): ISetIncidentFormCreateValuesAction => ({
-    type: INCIDENT_FORM_CREATE_VALUES,
-    value
-});
-export const setIncidentFormEditValues = (
-    value: IIncidents
-): ISetIncidentFormEditValuesAction => ({
-    type: INCIDENT_FORM_EDIT_VALUES,
-    value
-});
-export const setUsers = (users: Array<IUsers>): ISetUsersAction => ({
-    type: SET_USERS,
+export const setUsers = (users: Users[]): SetUsersAction => ({
+    type: SET_USERS_DATA,
     users
 });
-export const setIncidents = (
-    incidents: Array<IIncidents>
-): ISetIncidentsAction => ({
-    type: SET_INCIDENTS,
+export const setIncidents = (incidents: Incidents[]): SetIncidentsAction => ({
+    type: SET_INCIDENTS_DATA,
     incidents
 });
 export const setIncidentIsLoading = (
     incidentIsLoading: boolean
-): ISetIncidentIsLoadingAction => ({
-    type: INCIDENT_IS_LOADING,
+): SetIncidentIsLoadingAction => ({
+    type: INCIDENT_DATA_LOADING,
     incidentIsLoading
 });
 
-export const getUsers = () => ({ type: GET_USERS });
-export const getIncidents = () => ({ type: GET_INCIDENTS });
-export const createIncident = (
-    incidentTitle: string,
-    assignee: string,
-    area: string,
-    startDate: moment.Moment,
-    dueDate: moment.Moment,
-    description: string,
-    priority: string,
-    status: string
-): ICreateIncident => ({
-    type: POST_CREATE,
+export const getUsers = () => ({ type: GET_USERS_DATA });
+export const getIncidents = () => ({ type: GET_INCIDENTS_DATA });
+export const createIncident = ({
+    incidentTitle,
+    assignee,
+    area,
+    startDate,
+    dueDate,
+    description,
+    priority,
+    status
+}: CreateIncident): CreateIncidentAction => ({
+    type: CREATE_INCIDENT_SEND,
     incidentTitle,
     assignee,
     area,
@@ -119,22 +100,22 @@ export const createIncident = (
     priority,
     status
 });
-export const deleteIncident = (id: string): IDeleteIncident => ({
-    type: DELETE_INCIDENT,
+export const deleteIncident = (id: string): DeleteIncident => ({
+    type: DELETE_INCIDENT_SEND,
     id
 });
-export const editIncident = (
-    _id: string,
-    incidentTitle: string,
-    assignee: string,
-    area: string,
-    startDate: moment.Moment,
-    dueDate: moment.Moment,
-    description: string,
-    priority: string,
-    status: string
-): IEditIncident => ({
-    type: PUT_EDIT_INCIDENT,
+export const editIncident = ({
+    _id,
+    incidentTitle,
+    assignee,
+    area,
+    startDate,
+    dueDate,
+    description,
+    priority,
+    status
+}: EditIncident): EditIncidentAction => ({
+    type: EDIT_INCIDENT_SEND,
     _id,
     incidentTitle,
     assignee,

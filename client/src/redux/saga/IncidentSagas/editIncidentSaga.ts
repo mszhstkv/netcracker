@@ -2,7 +2,7 @@ import { put, call, takeEvery, SagaReturnType } from 'redux-saga/effects';
 import moment from 'moment';
 import { incidentAPI } from 'api/api';
 import {
-    PUT_EDIT_INCIDENT,
+    EDIT_INCIDENT_SEND,
     getIncidents,
     setIncidentIsLoading
 } from 'redux/actions/incident-action';
@@ -13,7 +13,7 @@ import {
 
 type EditIncidentResponseType = SagaReturnType<typeof incidentAPI.editIncident>;
 
-function* editIncidentWorker(params: {
+interface EditIncidentWorker {
     type: string;
     _id: string;
     incidentTitle: string;
@@ -24,7 +24,9 @@ function* editIncidentWorker(params: {
     description: string;
     priority: string;
     status: string;
-}) {
+}
+
+function* editIncidentWorker(params: EditIncidentWorker) {
     try {
         yield put(setIncidentIsLoading(true));
         const response: EditIncidentResponseType = yield call(
@@ -50,7 +52,7 @@ function* editIncidentWorker(params: {
 }
 
 function* editIncidentWatcher() {
-    yield takeEvery(PUT_EDIT_INCIDENT, editIncidentWorker);
+    yield takeEvery(EDIT_INCIDENT_SEND, editIncidentWorker);
 }
 
 export default editIncidentWatcher;

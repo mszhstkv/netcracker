@@ -1,7 +1,7 @@
 import React, { FC, PropsWithChildren, ReactElement } from 'react';
 import { DatePicker, Form, Input, Select, Space } from 'antd';
 import moment from 'moment';
-import { IUsers } from 'common/interfaces/interfaces';
+import { Users } from 'common/interfaces/interfaces';
 import {
     BlockerSvg,
     CriticalSvg,
@@ -18,16 +18,16 @@ import {
     tailFormItemLayout,
     layout
 } from 'components/Incident/Incident-form/Incident-form.styles';
-import { IIncidentFormProps } from 'components/Incident/Incident-form/interfaces/Incident-form.interface';
+import { IncidentFormProps } from 'components/Incident/Incident-form/interfaces/Incident-form.interface';
 
 const { Option } = Select;
 const { TextArea } = Input;
 
 let buttonText: string = '';
 
-const IncidentForm: FC<IIncidentFormProps> = ({
+const IncidentForm: FC<IncidentFormProps> = ({
     ...props
-}: PropsWithChildren<IIncidentFormProps>) => {
+}: PropsWithChildren<IncidentFormProps>) => {
     const [form] = Form.useForm();
 
     if (props.formName === 'create') {
@@ -63,7 +63,6 @@ const IncidentForm: FC<IIncidentFormProps> = ({
             onFinish={props.onFinish}
             scrollToFirstError
             initialValues={{ remember: true }}
-            onValuesChange={props.onValuesChange}
         >
             <Form.Item
                 name="incidentTitle"
@@ -86,7 +85,7 @@ const IncidentForm: FC<IIncidentFormProps> = ({
             >
                 <Select placeholder="Select assigner" allowClear>
                     {props.users.map(
-                        (user: IUsers): ReactElement => {
+                        (user: Users): ReactElement => {
                             const userValue = `${user.fullName} | ${user.login}`;
                             return (
                                 <Option key={user._id} value={userValue}>

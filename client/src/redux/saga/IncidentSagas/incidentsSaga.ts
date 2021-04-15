@@ -1,7 +1,7 @@
 import { put, call, takeEvery, SagaReturnType } from 'redux-saga/effects';
 import { incidentAPI } from 'api/api';
 import {
-    GET_INCIDENTS,
+    GET_INCIDENTS_DATA,
     setIncidents,
     setIncidentIsLoading
 } from 'redux/actions/incident-action';
@@ -26,7 +26,7 @@ function* getIncidentsWorker() {
 }
 
 function* incidentsWatcher() {
-    yield takeEvery(GET_INCIDENTS, getIncidentsWorker);
+    yield takeEvery(GET_INCIDENTS_DATA, getIncidentsWorker);
 }
 
 export default incidentsWatcher;

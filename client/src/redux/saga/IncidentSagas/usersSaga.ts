@@ -1,6 +1,6 @@
 import { put, call, takeEvery, SagaReturnType } from 'redux-saga/effects';
 import { usersAPI } from 'api/api';
-import { GET_USERS, setUsers } from 'redux/actions/incident-action';
+import { GET_USERS_DATA, setUsers } from 'redux/actions/incident-action';
 import { errorNotification } from 'common/ServerResponseNotification/Notification';
 
 type GetUsersResponseType = SagaReturnType<typeof usersAPI.getUsers>;
@@ -17,7 +17,7 @@ function* getUsersWorker() {
 }
 
 function* usersWatcher() {
-    yield takeEvery(GET_USERS, getUsersWorker);
+    yield takeEvery(GET_USERS_DATA, getUsersWorker);
 }
 
 export default usersWatcher;

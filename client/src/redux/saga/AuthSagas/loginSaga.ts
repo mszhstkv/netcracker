@@ -1,7 +1,7 @@
 import { put, call, takeEvery, SagaReturnType } from 'redux-saga/effects';
 import { authAPI } from 'api/api';
 import {
-    POST_LOGIN,
+    LOGIN_DATA_SEND,
     setLoginData,
     setLoginIsLoading
 } from 'redux/actions/auth-actions';
@@ -53,7 +53,7 @@ function* postLoginWorker(params: {
 }
 
 function* loginWatcher() {
-    yield takeEvery(POST_LOGIN, postLoginWorker);
+    yield takeEvery(LOGIN_DATA_SEND, postLoginWorker);
 }
 
 export default loginWatcher;

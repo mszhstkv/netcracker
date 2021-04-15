@@ -1,9 +1,9 @@
-export interface IHeaderContainerMapStateProps {
+export interface HeaderContainerMapStateProps {
     userLogin: string | null;
 }
 
-export interface IHeaderContainerMapDispatchProps {
+export interface HeaderContainerMapDispatchProps {
     logout: () => void;
 }
 
-export interface IHeaderContainerProps extends IHeaderContainerMapStateProps, IHeaderContainerMapDispatchProps {}
+export interface HeaderContainerProps extends HeaderContainerMapStateProps, HeaderContainerMapDispatchProps {}

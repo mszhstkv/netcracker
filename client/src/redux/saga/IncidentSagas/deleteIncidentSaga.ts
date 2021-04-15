@@ -1,7 +1,7 @@
 import { put, call, takeEvery, SagaReturnType } from 'redux-saga/effects';
 import { incidentAPI } from 'api/api';
 import {
-    DELETE_INCIDENT,
+    DELETE_INCIDENT_SEND,
     getIncidents,
     setIncidentIsLoading
 } from 'redux/actions/incident-action';
@@ -32,7 +32,7 @@ function* deleteIncidentWorker(params: { type: string; id: string }) {
 }
 
 function* deleteIncidentWatcher() {
-    yield takeEvery(DELETE_INCIDENT, deleteIncidentWorker);
+    yield takeEvery(DELETE_INCIDENT_SEND, deleteIncidentWorker);
 }
 
 export default deleteIncidentWatcher;

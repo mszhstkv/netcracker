@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useEffect } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { Form, Input, Row, Col } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { UserOutlined, DiffFilled, KeyOutlined } from '@ant-design/icons/lib';
@@ -14,14 +14,10 @@ import {
     titleLayout
 } from 'components/Auth/Auth.styles';
 import Loader from 'common/Loader/Loader';
-import { IAuthProps } from 'components/Auth/interfaces/Auth.interfaces';
+import { AuthProps } from 'components/Auth/interfaces/Auth.interfaces';
 
-const Auth: FC<IAuthProps> = ({ ...props }: PropsWithChildren<IAuthProps>) => {
+const Auth: FC<AuthProps> = ({ ...props }: PropsWithChildren<AuthProps>) => {
     const [form] = Form.useForm();
-
-    useEffect((): void => {
-        form.setFieldsValue({ ...props.loginForm });
-    }, [props.loginForm]);
 
     if (props.loginIsLoading) {
         return <Loader />;
@@ -37,7 +33,6 @@ const Auth: FC<IAuthProps> = ({ ...props }: PropsWithChildren<IAuthProps>) => {
                     name="loginForm"
                     onFinish={props.onFinish}
                     form={form}
-                    onValuesChange={props.onLoginFormValuesChange}
                 >
                     <Row>
                         <Col {...titleLayout}>

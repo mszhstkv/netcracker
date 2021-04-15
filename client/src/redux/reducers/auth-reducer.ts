@@ -1,8 +1,6 @@
-import { ILoginForm } from 'common/interfaces/interfaces';
 import {
     ActionsType,
-    LOGIN_FORM_VALUES,
-    LOGIN_IS_LOADING,
+    LOGIN_DATA_LOADING,
     SET_USER_DATA
 } from 'redux/actions/auth-actions';
 
@@ -10,12 +8,7 @@ const initState = {
     userId: null as string | null,
     token: null as string | null,
     userLogin: null as string | null,
-    loginIsLoading: false,
-
-    loginForm: {
-        login: null,
-        password: null
-    } as ILoginForm
+    loginIsLoading: false
 };
 
 export type InitialStateType = typeof initState;
@@ -28,18 +21,9 @@ const authReducer = (
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.payload,
-                loginForm: { login: null, password: null }
+                ...action.payload
             };
-        case LOGIN_FORM_VALUES:
-            return {
-                ...state,
-                loginForm: {
-                    ...state.loginForm,
-                    ...action.values
-                }
-            };
-        case LOGIN_IS_LOADING:
+        case LOGIN_DATA_LOADING:
             return {
                 ...state,
                 loginIsLoading: action.loginIsLoading

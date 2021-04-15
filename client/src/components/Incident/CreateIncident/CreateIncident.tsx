@@ -1,46 +1,30 @@
-import React, { FC, PropsWithChildren, useEffect } from 'react';
-import { Form, Popover } from 'antd';
+import React, { FC, PropsWithChildren } from 'react';
+import { Popover } from 'antd';
 import { PlusOutlined } from '@ant-design/icons/lib';
 import moment from 'moment';
 import { CreateIncidentButton } from 'components/Incident/CreateIncident/CreateIncident.styles';
 import Loader from 'common/Loader/Loader';
-import { IIncidents } from 'common/interfaces/interfaces';
 import IncidentForm from 'components/Incident/Incident-form/Incident-form';
-import { ICreateIncidentProps } from 'components/Incident/CreateIncident/interfaces/CreateIncident.interfaces';
+import {
+    CreateIncidentOnFinish,
+    CreateIncidentProps
+} from 'components/Incident/CreateIncident/interfaces/CreateIncident.interfaces';
 
-const CreateIncident: FC<ICreateIncidentProps> = ({
+const CreateIncident: FC<CreateIncidentProps> = ({
     ...props
-}: PropsWithChildren<ICreateIncidentProps>) => {
-    const [form] = Form.useForm();
-
-    useEffect((): void => {
-        form.setFieldsValue({ ...props.incidentFormCreate });
-    }, [props.incidentFormCreate]);
-
-    const onValuesChange = (value: IIncidents) => {
-        props.setIncidentFormCreateValues(value);
-    };
-
-    const onFinish = (values: {
-        incidentTitle: string;
-        assignee: string;
-        area: string;
-        dueDate: moment.Moment;
-        description: string;
-        priority: string;
-        status: string;
-    }): void => {
+}: PropsWithChildren<CreateIncidentProps>) => {
+    const onFinish = (values: CreateIncidentOnFinish): void => {
         const startDate: moment.Moment = moment().utc(true);
-        props.create(
-            values.incidentTitle,
-            values.assignee,
-            values.area,
+        props.createIncident({
+            incidentTitle: values.incidentTitle,
+            assignee: values.assignee,
+            area: values.area,
             startDate,
-            values.dueDate,
-            values.description,
-            values.priority,
-            values.status
-        );
+            dueDate: values.dueDate,
+            description: values.description,
+            priority: values.priority,
+            status: values.status
+        });
     };
 
     if (props.incidentIsLoading) {
@@ -53,7 +37,6 @@ const CreateIncident: FC<ICreateIncidentProps> = ({
                 <IncidentForm
                     formName="create"
                     onFinish={onFinish}
-                    onValuesChange={onValuesChange}
                     disabledDate={props.disabledDate}
                     users={props.users}
                 />

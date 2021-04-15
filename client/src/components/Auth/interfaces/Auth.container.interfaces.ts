@@ -1,16 +1,12 @@
-import { ILoginForm } from 'common/interfaces/interfaces';
-
-interface IAuthContainerMapStateProps {
-    loginForm: ILoginForm;
+interface AuthContainerMapStateProps {
     loginIsLoading: boolean;
 }
 
-interface IAuthContainerMapDispatchProps {
-    setLoginFormValues: (value: ILoginForm) => void;
+interface AuthContainerMapDispatchProps {
     postLogin: (login: string, password: string) => void;
     setFromRegister: (fromRegister: boolean) => void;
 }
 
-export interface IAuthContainerProps
-    extends IAuthContainerMapStateProps,
-        IAuthContainerMapDispatchProps {}
+export interface AuthContainerProps
+    extends AuthContainerMapStateProps,
+        AuthContainerMapDispatchProps {}

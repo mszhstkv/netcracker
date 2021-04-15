@@ -1,21 +1,30 @@
-import { IIncidents, IUsers } from 'common/interfaces/interfaces';
+import { EditIncident, Incidents, Users } from 'common/interfaces/interfaces';
 import moment from 'moment';
 
-export interface IEditIncidentProps {
-    incidentInfo: IIncidents;
-    users: Array<IUsers>;
+export interface EditIncidentOnFinish {
+    incidentTitle: string;
+    assignee: string;
+    area: string;
+    dueDate: moment.Moment;
+    description: string;
+    priority: string;
+    status: string;
+}
+
+export interface EditIncidentProps {
+    incidentInfo: Incidents;
+    users: Users[];
     incidentIsLoading: boolean;
-    editIncident: (
-        _id: string,
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: moment.Moment,
-        dueDate: moment.Moment,
-        description: string,
-        priority: string,
-        status: string
-    ) => void;
+    editIncident: ({
+        _id,
+        incidentTitle,
+        assignee,
+        area,
+        startDate,
+        dueDate,
+        description,
+        priority,
+        status
+    }: EditIncident) => void;
     disabledDate: (current: moment.Moment) => boolean;
-    setIncidentFormEditValues: (value: IIncidents) => void;
 }

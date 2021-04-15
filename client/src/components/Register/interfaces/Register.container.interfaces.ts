@@ -1,12 +1,17 @@
-import { IRegisterForm } from 'common/interfaces/interfaces';
+export interface RegisterOnFinish {
+    login: string;
+    password: string;
+    fullName: string;
+    dateOfBirth: string;
+    position: string;
+}
 
-interface IRegisterContainerMapStateProps {
+interface RegisterContainerMapStateProps {
     fromRegister: boolean;
-    registerForm: IRegisterForm;
     registerIsLoading: boolean;
 }
 
-interface IRegisterContainerMapDispatchProps {
+interface RegisterContainerMapDispatchProps {
     register: (
         login: string,
         password: string,
@@ -14,9 +19,8 @@ interface IRegisterContainerMapDispatchProps {
         dateOfBirth: string,
         position: string
     ) => void;
-    setRegisterFormValues: (value: IRegisterForm) => void;
 }
 
-export interface IRegisterContainerProps
-    extends IRegisterContainerMapStateProps,
-        IRegisterContainerMapDispatchProps {}
+export interface RegisterContainerProps
+    extends RegisterContainerMapStateProps,
+        RegisterContainerMapDispatchProps {}

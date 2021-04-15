@@ -11,12 +11,12 @@ import {
 import EditIncident from 'components/Incident/EditIncident/EditIncident';
 import { ActionButton } from 'components/Incident/Incident.styles';
 import Loader from 'common/Loader/Loader';
-import { IIncidents } from 'common/interfaces/interfaces';
-import { IIncidentProps } from 'components/Incident/interfaces/incident.interfaces';
+import { Incidents } from 'common/interfaces/interfaces';
+import { IncidentProps } from 'components/Incident/interfaces/incident.interfaces';
 
-const Incident: FC<IIncidentProps> = ({
+const Incident: FC<IncidentProps> = ({
     ...props
-}: PropsWithChildren<IIncidentProps>) => {
+}: PropsWithChildren<IncidentProps>) => {
     const columns = [
         {
             title: '',
@@ -66,7 +66,7 @@ const Incident: FC<IIncidentProps> = ({
         {
             title: 'Action',
             key: 'action',
-            render: (record: IIncidents) => (
+            render: (record: Incidents) => (
                 <Space size="middle">
                     <Popover
                         content={
@@ -75,9 +75,6 @@ const Incident: FC<IIncidentProps> = ({
                                 users={props.users}
                                 editIncident={props.editIncident}
                                 disabledDate={props.disabledDate}
-                                setIncidentFormEditValues={
-                                    props.setIncidentFormEditValues
-                                }
                                 incidentIsLoading={props.incidentIsLoading}
                             />
                         }
@@ -99,7 +96,7 @@ const Incident: FC<IIncidentProps> = ({
         }
     ];
     const data = props.incidents.map(
-        (incident: IIncidents): IIncidents => {
+        (incident: Incidents): Incidents => {
             const reformatIncident = { ...incident };
 
             const [startDate] = incident.startDate.split('T');
@@ -135,10 +132,8 @@ const Incident: FC<IIncidentProps> = ({
         <>
             <CreateIncident
                 users={props.users}
-                create={props.create}
+                createIncident={props.createIncident}
                 disabledDate={props.disabledDate}
-                setIncidentFormCreateValues={props.setIncidentFormCreateValues}
-                incidentFormCreate={props.incidentFormCreate}
                 incidentIsLoading={props.incidentIsLoading}
             />
             <Table

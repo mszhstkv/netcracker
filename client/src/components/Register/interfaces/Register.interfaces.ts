@@ -1,9 +1,7 @@
-import { IRegisterForm } from 'common/interfaces/interfaces';
 import moment from 'moment';
 
-export interface IRegisterProps {
+export interface RegisterProps {
     fromRegister: boolean;
-    onRegisterFormValuesChange: (value: IRegisterForm) => void;
     onFinish: (values: {
         login: string;
         password: string;
@@ -11,7 +9,6 @@ export interface IRegisterProps {
         dateOfBirth: string;
         position: string;
     }) => void;
-    registerForm: IRegisterForm;
     registerIsLoading: boolean;
     disabledDate: (current: moment.Moment) => boolean;
 }

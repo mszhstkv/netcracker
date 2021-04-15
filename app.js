@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const config = require('config');
 const path = require('path');
@@ -8,7 +9,7 @@ const app = express();
 app.use(express.json({extended: true}));
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/users', require('./routes/users.routes'));
-app.use('/api/incident', require('./routes/incident.routes'));
+app.use('/api/incidents', require('./routes/incident.routes'));
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static(path.join(__dirname, 'client', 'build')));

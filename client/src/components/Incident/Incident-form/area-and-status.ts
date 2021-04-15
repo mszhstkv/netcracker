@@ -1,4 +1,4 @@
-export const areas: Array<string> = [
+export const areas: string[] = [
     'Подготовка оборудования',
     'Монтировочные работы',
     'Установка электрооборудования',
@@ -8,7 +8,7 @@ export const areas: Array<string> = [
     'Обслуживание объекта'
 ];
 
-export const statuses: Array<string> = [
+export const statuses: string[] = [
     'Открыт',
     'В работе',
     'Необходима доп. Информация',

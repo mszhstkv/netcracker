@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import Header from 'components/Header/Header';
 import { logout } from 'redux/actions/auth-actions';
 import { AppStateType } from 'redux/store';
-import { IHeaderContainerProps } from 'components/Header/interfaces/Header.container.interfaces';
+import { HeaderContainerProps } from 'components/Header/interfaces/Header.container.interfaces';
 
-const HeaderContainer: FC<IHeaderContainerProps> = ({
+const HeaderContainer: FC<HeaderContainerProps> = ({
     ...props
-}: PropsWithChildren<IHeaderContainerProps>) => (
+}: PropsWithChildren<HeaderContainerProps>) => (
     <Header userLogin={props.userLogin} logout={props.logout} />
 );
 

@@ -1,7 +1,7 @@
 import moment from 'moment';
-import { IIncidents, IUsers } from 'common/interfaces/interfaces';
+import { Incidents, Users } from 'common/interfaces/interfaces';
 
-export interface IIncidentFormProps {
+export interface IncidentFormProps {
     formName: string;
     onFinish: (values: {
         incidentTitle: string;
@@ -12,8 +12,7 @@ export interface IIncidentFormProps {
         priority: string;
         status: string;
     }) => void;
-    onValuesChange: (value: IIncidents) => void;
-    incident?: IIncidents | undefined;
+    incident?: Incidents | undefined;
     disabledDate: (current: moment.Moment) => boolean;
-    users: Array<IUsers>;
+    users: Users[];
 }

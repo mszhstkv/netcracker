@@ -1,67 +1,52 @@
-import { ILoginForm } from 'common/interfaces/interfaces';
-
 export const SET_USER_DATA = 'SET_USER_DATA';
-export const POST_LOGIN = 'POST_LOGIN';
+export const LOGIN_DATA_SEND = 'LOGIN_DATA_SEND';
 export const LOGOUT = 'LOGOUT';
-export const LOGIN_FORM_VALUES = 'LOGIN_FORM_VALUES';
-export const LOGIN_IS_LOADING = 'LOGIN_IS_LOADING';
+export const LOGIN_DATA_LOADING = 'LOGIN_DATA_LOADING';
 
-export type ActionsType =
-    | ISetLoginDataAction
-    | ISetLoginFormValuesAction
-    | ISetLoginIsLoadingAction;
+export type ActionsType = SetLoginDataAction | SetLoginIsLoadingAction;
 
-interface ISetLoginDataActionPayload {
+interface SetLoginDataActionPayload {
     userId: string | null;
     token: string | null;
     userLogin: string | null;
 }
 
-interface ISetLoginDataAction {
+interface SetLoginDataAction {
     type: typeof SET_USER_DATA;
-    payload: ISetLoginDataActionPayload;
+    payload: SetLoginDataActionPayload;
 }
 
-interface ISetLoginFormValuesAction {
-    type: typeof LOGIN_FORM_VALUES;
-    values: ILoginForm;
-}
-
-interface ISetLoginIsLoadingAction {
-    type: typeof LOGIN_IS_LOADING;
+interface SetLoginIsLoadingAction {
+    type: typeof LOGIN_DATA_LOADING;
     loginIsLoading: boolean;
 }
-interface ILoginAction {
-    type: typeof POST_LOGIN;
+interface LoginAction {
+    type: typeof LOGIN_DATA_SEND;
     login: string;
     password: string;
 }
 
-interface ILogout {
+interface Logout {
     type: typeof LOGOUT;
 }
 
 export const setLoginIsLoading = (
     loginIsLoading: boolean
-): ISetLoginIsLoadingAction => ({ type: LOGIN_IS_LOADING, loginIsLoading });
-
-export const setLoginFormValues = (
-    values: ILoginForm
-): ISetLoginFormValuesAction => ({ type: LOGIN_FORM_VALUES, values });
+): SetLoginIsLoadingAction => ({ type: LOGIN_DATA_LOADING, loginIsLoading });
 
 export const setLoginData = (
     userId: string | null,
     token: string | null,
     userLogin: string | null
-): ISetLoginDataAction => ({
+): SetLoginDataAction => ({
     type: SET_USER_DATA,
     payload: { userId, token, userLogin }
 });
 
-export const postLogin = (login: string, password: string): ILoginAction => ({
-    type: POST_LOGIN,
+export const postLogin = (login: string, password: string): LoginAction => ({
+    type: LOGIN_DATA_SEND,
     login,
     password
 });
 
-export const logout = (): ILogout => ({ type: LOGOUT });
+export const logout = (): Logout => ({ type: LOGOUT });

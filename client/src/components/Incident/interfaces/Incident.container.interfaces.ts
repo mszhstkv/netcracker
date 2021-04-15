@@ -1,46 +1,43 @@
 import {
-    IIncidentForm,
-    IIncidents,
-    IUsers
+    CreateIncident,
+    EditIncident,
+    Incidents,
+    Users
 } from 'common/interfaces/interfaces';
-import moment from 'moment';
 
-interface IIncidentContainerMapStateProps {
-    users: Array<IUsers>;
-    incidents: Array<IIncidents>;
-    incidentFormCreate: IIncidentForm;
+interface IncidentContainerMapStateProps {
+    users: Users[];
+    incidents: Incidents[];
     incidentIsLoading: boolean;
 }
 
-interface IIncidentContainerMapDispatchProps {
+interface IncidentContainerMapDispatchProps {
     getUsers: () => void;
     getIncidents: () => void;
-    create: (
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: moment.Moment,
-        dueDate: moment.Moment,
-        description: string,
-        priority: string,
-        status: string
-    ) => void;
+    createIncident: ({
+        incidentTitle,
+        assignee,
+        area,
+        startDate,
+        dueDate,
+        description,
+        priority,
+        status
+    }: CreateIncident) => void;
     deleteIncident: (id: string) => void;
-    editIncident: (
-        _id: string,
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: moment.Moment,
-        dueDate: moment.Moment,
-        description: string,
-        priority: string,
-        status: string
-    ) => void;
-    setIncidentFormCreateValues: (value: IIncidents) => void;
-    setIncidentFormEditValues: (value: IIncidents) => void;
+    editIncident: ({
+        _id,
+        incidentTitle,
+        assignee,
+        area,
+        startDate,
+        dueDate,
+        description,
+        priority,
+        status
+    }: EditIncident) => void;
 }
 
-export interface IIncidentContainerProps
-    extends IIncidentContainerMapStateProps,
-        IIncidentContainerMapDispatchProps {}
+export interface IncidentContainerProps
+    extends IncidentContainerMapStateProps,
+        IncidentContainerMapDispatchProps {}

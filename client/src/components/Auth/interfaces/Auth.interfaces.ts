@@ -1,8 +1,4 @@
-import { ILoginForm } from 'common/interfaces/interfaces';
-
-export interface IAuthProps {
-    onLoginFormValuesChange: (value: ILoginForm) => void;
-    loginForm: ILoginForm;
+export interface AuthProps {
     onFinish: (values: { login: string; password: string }) => void;
     fromRegisterReset: () => void;
     loginIsLoading: boolean;

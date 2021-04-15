@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useEffect } from 'react';
+import React, { FC, PropsWithChildren } from 'react';
 import { Col, DatePicker, Form, Input, Row } from 'antd';
 import { NavLink, Redirect } from 'react-router-dom';
 import {
@@ -11,19 +11,15 @@ import {
     Title
 } from 'components/Register/Register.styles';
 import Loader from 'common/Loader/Loader';
-import { IRegisterProps } from 'components/Register/interfaces/Register.interfaces';
+import { RegisterProps } from 'components/Register/interfaces/Register.interfaces';
 
 const minLengthLogin: number = 3;
 const minLengthPassword: number = 6;
 
-const Register: FC<IRegisterProps> = ({
+const Register: FC<RegisterProps> = ({
     ...props
-}: PropsWithChildren<IRegisterProps>) => {
+}: PropsWithChildren<RegisterProps>) => {
     const [form] = Form.useForm();
-
-    useEffect((): void => {
-        form.setFieldsValue({ ...props.registerForm });
-    }, [props.registerForm]);
 
     if (props.registerIsLoading) {
         return <Loader />;
@@ -43,7 +39,6 @@ const Register: FC<IRegisterProps> = ({
                     form={form}
                     className="register-form"
                     scrollToFirstError
-                    onValuesChange={props.onRegisterFormValuesChange}
                     onFinish={props.onFinish}
                 >
                     <Title>Registration</Title>

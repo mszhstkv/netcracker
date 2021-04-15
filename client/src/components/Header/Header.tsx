@@ -9,11 +9,11 @@ import {
     headerLayoutTitle,
     headerLayoutLoginAndButton
 } from 'components/Header/Header.styles';
-import { IHeaderProps } from 'components/Header/interfaces/Header.interfaces';
+import { HeaderProps } from 'components/Header/interfaces/Header.interfaces';
 
-const Header: FC<IHeaderProps> = ({
+const Header: FC<HeaderProps> = ({
     ...props
-}: PropsWithChildren<IHeaderProps>) => (
+}: PropsWithChildren<HeaderProps>) => (
     <StyledHeader>
         <Row>
             <Col {...headerLayoutTitle}>

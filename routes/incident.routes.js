@@ -1,66 +1,72 @@
-const Incident = require('../models/Incident');
-const {Router} = require('express');
+const Incident = require("../models/Incident");
+const { Router } = require("express");
 const express = require("express");
 const jsonParser = express.json();
 
-
 const router = Router();
 
-// /api/incident/create
-router.post(
-  '/create', async (req, res) => {
-    try {
-      const {incidentTitle, assignee, area, startDate, dueDate, description, priority, status} = req.body;
+// /api/incidents
+router.post("", async (req, res) => {
+  try {
+    const {
+      incidentTitle,
+      assignee,
+      area,
+      startDate,
+      dueDate,
+      description,
+      priority,
+      status,
+    } = req.body;
 
-      const incident = new Incident({
-        incidentTitle,
-        assignee,
-        area,
-        startDate,
-        dueDate,
-        description,
-        priority,
-        status
-      });
+    const incident = new Incident({
+      incidentTitle,
+      assignee,
+      area,
+      startDate,
+      dueDate,
+      description,
+      priority,
+      status,
+    });
 
-      await incident.save();
+    await incident.save();
 
-      return res.status(201).json({message: 'Incident has been created'});
+    return res.status(201).json({ message: "Incident has been created" });
+  } catch (e) {
+    res.status(500).json({ message: "Something goes wrong. Try again" });
+  }
+});
 
-    } catch (e) {
-      res.status(500).json({message: 'Something goes wrong. Try again'});
-    }
-  });
-
-// /api/incident/allIncidents
-router.get('/allIncidents', async (req, res) => {
+// /api/incidents
+router.get("", async (req, res) => {
   try {
     const incidents = await Incident.find({});
     return res.json(incidents);
   } catch (e) {
-    res.status(500).json({message: 'Something goes wrong. Try again'});
+    res.status(500).json({ message: "Something goes wrong. Try again" });
   }
 });
 
-
-router.delete('/allIncidents/:id', async (req, res) => {
+// /api/incidents/:id
+router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     Incident.findByIdAndDelete(id, (err, docs) => {
       if (err) {
-        return res.status(500).json({message: err});
+        return res.status(500).json({ message: err });
       } else {
         console.log("Deleted : ", docs);
       }
-    })
-    return res.json({message: 'Incident has been deleted'});
+    });
+    return res.json({ message: "Incident has been deleted" });
   } catch (e) {
-    res.status(500).json({message: 'Something goes wrong. Try again'});
+    res.status(500).json({ message: "Something goes wrong. Try again" });
   }
-
 });
 
-router.put('/allIncidents', jsonParser, async (req, res) => {
+// /api/incidents/:id
+router.put("/:id", jsonParser, async (req, res) => {
   try {
     const _id = req.body._id;
     const incidentTitle = req.body.incidentTitle;
@@ -72,14 +78,23 @@ router.put('/allIncidents', jsonParser, async (req, res) => {
     const priority = req.body.priority;
     const status = req.body.status;
 
-    const newIncident = {incidentTitle, assignee, area, startDate, dueDate, description, priority, status};
+    const newIncident = {
+      incidentTitle,
+      assignee,
+      area,
+      startDate,
+      dueDate,
+      description,
+      priority,
+      status,
+    };
 
-    Incident.updateOne({_id}, newIncident, {new: true}, function (err) {
-      if (err) return res.status(500).json({message: err});
+    Incident.updateOne({ _id }, newIncident, { new: true }, function (err) {
+      if (err) return res.status(500).json({ message: err });
     });
-    return res.json({message: 'Incident has been edited'});
+    return res.json({ message: "Incident has been edited" });
   } catch (e) {
-    res.status(500).json({message: 'Something goes wrong. Try again'});
+    res.status(500).json({ message: "Something goes wrong. Try again" });
   }
 });
 
