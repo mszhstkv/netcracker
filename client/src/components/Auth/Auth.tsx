@@ -6,7 +6,6 @@ import {
     formLayout,
     layout,
     LoginButton,
-    LoginForm,
     loginLayout,
     RegisterButton,
     tailLayout,
@@ -14,25 +13,25 @@ import {
     titleLayout
 } from 'components/Auth/Auth.styles';
 import Loader from 'common/Loader/Loader';
-import { AuthProps } from 'components/Auth/interfaces/Auth.interfaces';
+import { AuthProps } from 'components/Auth/features/interfaces/Auth.interfaces';
 
-const Auth: FC<AuthProps> = ({ ...props }: PropsWithChildren<AuthProps>) => {
-    const [form] = Form.useForm();
-
-    if (props.loginIsLoading) {
+const Auth: FC<AuthProps> = ({
+    loginIsLoading,
+    onFinish,
+    fromRegisterReset
+}: PropsWithChildren<AuthProps>) => {
+    if (loginIsLoading) {
         return <Loader />;
     }
 
     return (
         <Row>
             <Col {...loginLayout}>
-                <LoginForm />
                 <Form
                     className="login-form"
                     {...layout}
                     name="loginForm"
-                    onFinish={props.onFinish}
-                    form={form}
+                    onFinish={onFinish}
                 >
                     <Row>
                         <Col {...titleLayout}>
@@ -45,7 +44,7 @@ const Auth: FC<AuthProps> = ({ ...props }: PropsWithChildren<AuthProps>) => {
                             <Form.Item
                                 label="Login"
                                 name="login"
-                                className="login-form_item_login"
+                                className="login-form__item-login"
                                 rules={[
                                     {
                                         required: true,
@@ -84,7 +83,7 @@ const Auth: FC<AuthProps> = ({ ...props }: PropsWithChildren<AuthProps>) => {
                                         <NavLink
                                             to="/register"
                                             className="login-form_register-link"
-                                            onClick={props.fromRegisterReset}
+                                            onClick={fromRegisterReset}
                                         >
                                             Register
                                         </NavLink>

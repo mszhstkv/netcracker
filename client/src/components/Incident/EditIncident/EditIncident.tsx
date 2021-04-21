@@ -5,18 +5,25 @@ import IncidentForm from 'components/Incident/Incident-form/Incident-form';
 import {
     EditIncidentOnFinish,
     EditIncidentProps
-} from 'components/Incident/EditIncident/interfaces/EditIncident.interface';
+} from 'components/Incident/EditIncident/features/interfaces/EditIncident.interface';
+import { connect } from 'react-redux';
+import { editIncident } from '../../../redux/actions/incident.actions';
+import { AppStateType } from '../../../redux/store';
 
 const EditIncident: FC<EditIncidentProps> = ({
-    ...props
+    editIncidentAction,
+    users,
+    incidentIsLoading,
+    disabledDate,
+    incidentInfo
 }: PropsWithChildren<EditIncidentProps>) => {
     const onFinish = (values: EditIncidentOnFinish): void => {
-        props.editIncident({
-            _id: props.incidentInfo._id,
+        editIncidentAction({
+            _id: incidentInfo._id,
             incidentTitle: values.incidentTitle,
             assignee: values.assignee,
             area: values.area,
-            startDate: moment(props.incidentInfo.startDate).utc(true),
+            startDate: moment(incidentInfo.startDate).utc(true),
             dueDate: values.dueDate.utc(true),
             description: values.description,
             priority: values.priority,
@@ -24,19 +31,25 @@ const EditIncident: FC<EditIncidentProps> = ({
         });
     };
 
-    if (props.incidentIsLoading) {
+    if (incidentIsLoading) {
         return <Loader />;
     }
 
     return (
         <IncidentForm
-            formName="edit"
             onFinish={onFinish}
-            disabledDate={props.disabledDate}
-            users={props.users}
-            incident={props.incidentInfo}
+            disabledDate={disabledDate}
+            users={users}
+            incident={incidentInfo}
         />
     );
 };
 
-export default EditIncident;
+const mapStateToProps = (state: AppStateType) => ({
+    users: state.incident.users,
+    incidentIsLoading: state.incident.incidentIsLoading
+});
+
+export default connect(mapStateToProps, { editIncidentAction: editIncident })(
+    EditIncident
+);

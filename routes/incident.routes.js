@@ -52,7 +52,7 @@ router.get("", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    Incident.findByIdAndDelete(id, (err, docs) => {
+    await Incident.findByIdAndDelete(id, (err, docs) => {
       if (err) {
         return res.status(500).json({ message: err });
       } else {
@@ -68,16 +68,17 @@ router.delete("/:id", async (req, res) => {
 // /api/incidents/:id
 router.put("/:id", jsonParser, async (req, res) => {
   try {
-    const _id = req.body._id;
-    const incidentTitle = req.body.incidentTitle;
-    const assignee = req.body.assignee;
-    const area = req.body.area;
-    const startDate = req.body.startDate;
-    const dueDate = req.body.dueDate;
-    const description = req.body.description;
-    const priority = req.body.priority;
-    const status = req.body.status;
-
+    const {
+      _id,
+      incidentTitle,
+      assignee,
+      area,
+      startDate,
+      dueDate,
+      description,
+      priority,
+      status,
+    } = req.body;
     const newIncident = {
       incidentTitle,
       assignee,
@@ -89,7 +90,7 @@ router.put("/:id", jsonParser, async (req, res) => {
       status,
     };
 
-    Incident.updateOne({ _id }, newIncident, { new: true }, function (err) {
+    await Incident.updateOne({ _id }, newIncident, { new: true }, function (err) {
       if (err) return res.status(500).json({ message: err });
     });
     return res.json({ message: "Incident has been edited" });

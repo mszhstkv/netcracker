@@ -14,6 +14,9 @@ export interface CreateData {
 export interface DeleteIncidentData {
     message: string;
 }
+
 export interface EditIncidentData {
     message: string;
 }
+
+

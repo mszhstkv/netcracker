@@ -4,7 +4,7 @@ import {
     REGISTER_DATA_SEND,
     setFromRegister,
     setRegisterIsLoading
-} from 'redux/actions/register-actions';
+} from 'redux/actions/register.actions';
 import {
     errorNotification,
     successNotification
@@ -21,16 +21,22 @@ interface RegisterWorker {
     position: string;
 }
 
-function* postRegisterWorker(params: RegisterWorker) {
+function* postRegisterWorker({
+    login,
+    password,
+    fullName,
+    dateOfBirth,
+    position
+}: RegisterWorker) {
     try {
         yield put(setRegisterIsLoading(true));
         const response: RegisterResponseType = yield call(
             authAPI.register,
-            params.login,
-            params.password,
-            params.fullName,
-            params.dateOfBirth,
-            params.position
+            login,
+            password,
+            fullName,
+            dateOfBirth,
+            position
         );
         if (response.status >= 200 && response.status < 300) {
             successNotification('Success', response.data.message);

@@ -1,51 +1,51 @@
 import React, { FC, PropsWithChildren, useEffect } from 'react';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { connect } from 'react-redux';
 import Incident from 'components/Incident/Incident';
 import {
     getUsers,
-    createIncident,
     getIncidents,
     deleteIncident,
     editIncident
-} from 'redux/actions/incident-action';
+} from 'redux/actions/incident.actions';
 import { AppStateType } from 'redux/store';
-import { IncidentContainerProps } from 'components/Incident/interfaces/Incident.container.interfaces';
+import { IncidentContainerProps } from 'components/Incident/features/interfaces/Incident.container.interfaces';
 
 const IncidentContainer: FC<IncidentContainerProps> = ({
-    ...props
+    getIncidentsAction,
+    incidents,
+    incidentIsLoading,
+    deleteIncidentAction,
+    editIncidentAction,
+    getUsersAction
 }: PropsWithChildren<IncidentContainerProps>) => {
     useEffect((): void => {
-        props.getUsers();
-        props.getIncidents();
+        getUsersAction();
+        getIncidentsAction();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    const disabledDate = (current: moment.Moment): boolean =>
+    const disabledDate = (current: Moment): boolean =>
         current && current < moment().startOf('day');
 
     return (
         <Incident
-            users={props.users}
-            deleteIncident={props.deleteIncident}
-            incidents={props.incidents}
-            createIncident={props.createIncident}
-            editIncident={props.editIncident}
+            deleteIncident={deleteIncidentAction}
+            incidents={incidents}
+            editIncident={editIncidentAction}
             disabledDate={disabledDate}
-            incidentIsLoading={props.incidentIsLoading}
+            incidentIsLoading={incidentIsLoading}
         />
     );
 };
 
 const mapStateToProps = (state: AppStateType) => ({
-    users: state.incident.users,
     incidents: state.incident.incidents,
     incidentIsLoading: state.incident.incidentIsLoading
 });
 
 export default connect(mapStateToProps, {
-    getUsers,
-    getIncidents,
-    createIncident,
-    deleteIncident,
-    editIncident
+    getUsersAction: getUsers,
+    getIncidentsAction: getIncidents,
+    deleteIncidentAction: deleteIncident,
+    editIncidentAction: editIncident
 })(IncidentContainer);

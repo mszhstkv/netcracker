@@ -1,21 +1,27 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { Popover } from 'antd';
 import { PlusOutlined } from '@ant-design/icons/lib';
-import moment from 'moment';
 import { CreateIncidentButton } from 'components/Incident/CreateIncident/CreateIncident.styles';
 import Loader from 'common/Loader/Loader';
 import IncidentForm from 'components/Incident/Incident-form/Incident-form';
 import {
     CreateIncidentOnFinish,
     CreateIncidentProps
-} from 'components/Incident/CreateIncident/interfaces/CreateIncident.interfaces';
+} from 'components/Incident/CreateIncident/features/interfaces/CreateIncident.interfaces';
+import moment, { Moment } from 'moment';
+import { connect } from 'react-redux';
+import { createIncident } from 'redux/actions/incident.actions';
+import { AppStateType } from 'redux/store';
 
 const CreateIncident: FC<CreateIncidentProps> = ({
-    ...props
+    createIncidentAction,
+    disabledDate,
+    incidentIsLoading,
+    users
 }: PropsWithChildren<CreateIncidentProps>) => {
     const onFinish = (values: CreateIncidentOnFinish): void => {
-        const startDate: moment.Moment = moment().utc(true);
-        props.createIncident({
+        const startDate: Moment = moment().utc(true);
+        createIncidentAction({
             incidentTitle: values.incidentTitle,
             assignee: values.assignee,
             area: values.area,
@@ -27,7 +33,7 @@ const CreateIncident: FC<CreateIncidentProps> = ({
         });
     };
 
-    if (props.incidentIsLoading) {
+    if (incidentIsLoading) {
         return <Loader />;
     }
 
@@ -35,10 +41,9 @@ const CreateIncident: FC<CreateIncidentProps> = ({
         <Popover
             content={
                 <IncidentForm
-                    formName="create"
                     onFinish={onFinish}
-                    disabledDate={props.disabledDate}
-                    users={props.users}
+                    disabledDate={disabledDate}
+                    users={users}
                 />
             }
             title="Create new incident"
@@ -53,4 +58,11 @@ const CreateIncident: FC<CreateIncidentProps> = ({
     );
 };
 
-export default CreateIncident;
+const mapStateToProps = (state: AppStateType) => ({
+    users: state.incident.users,
+    incidentIsLoading: state.incident.incidentIsLoading
+});
+
+export default connect(mapStateToProps, {
+    createIncidentAction: createIncident
+})(CreateIncident);

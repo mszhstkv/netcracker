@@ -1,27 +1,32 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { connect } from 'react-redux';
 import Auth from 'components/Auth/Auth';
-import { postLogin } from 'redux/actions/auth-actions';
-import { setFromRegister } from 'redux/actions/register-actions';
+import { postLogin } from 'redux/actions/auth.actions';
+import { setFromRegister } from 'redux/actions/register.actions';
 import { AppStateType } from 'redux/store';
-import { AuthContainerProps } from 'components/Auth/interfaces/Auth.container.interfaces';
+import {
+    AuthContainerProps,
+    OnFinish
+} from 'components/Auth/features/interfaces/Auth.container.interfaces';
 
 const AuthContainer: FC<AuthContainerProps> = ({
-    ...props
+    postLoginAction,
+    loginIsLoading,
+    setFromRegisterAction
 }: PropsWithChildren<AuthContainerProps>) => {
-    const onFinish = (values: { login: string; password: string }): void => {
-        props.postLogin(values.login, values.password);
+    const onFinish = (values: OnFinish): void => {
+        postLoginAction(values.login, values.password);
     };
 
     const fromRegisterReset = (): void => {
-        props.setFromRegister(false);
+        setFromRegisterAction(false);
     };
 
     return (
         <Auth
             onFinish={onFinish}
             fromRegisterReset={fromRegisterReset}
-            loginIsLoading={props.loginIsLoading}
+            loginIsLoading={loginIsLoading}
         />
     );
 };
@@ -31,6 +36,6 @@ const mapStateToProps = (state: AppStateType) => ({
 });
 
 export default connect(mapStateToProps, {
-    postLogin,
-    setFromRegister
+    postLoginAction: postLogin,
+    setFromRegisterAction: setFromRegister
 })(AuthContainer);

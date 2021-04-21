@@ -6,21 +6,22 @@ import {
     formLayout,
     LoginButton,
     RegisterButton,
-    RegisterForm,
     tailFormItemLayout,
     Title
 } from 'components/Register/Register.styles';
 import Loader from 'common/Loader/Loader';
-import { RegisterProps } from 'components/Register/interfaces/Register.interfaces';
-
-const minLengthLogin: number = 3;
-const minLengthPassword: number = 6;
+import { RegisterProps } from 'components/Register/features/interfaces/Register.interfaces';
+import {
+    fullNameInputPattern,
+    loginInputPattern,
+    minLengthLogin,
+    minLengthPassword,
+    passwordInputPattern
+} from './features/constants/Register.constants';
 
 const Register: FC<RegisterProps> = ({
     ...props
 }: PropsWithChildren<RegisterProps>) => {
-    const [form] = Form.useForm();
-
     if (props.registerIsLoading) {
         return <Loader />;
     }
@@ -32,11 +33,9 @@ const Register: FC<RegisterProps> = ({
     return (
         <Row>
             <Col {...formLayout}>
-                <RegisterForm />
                 <Form
                     {...formItemLayout}
                     name="register"
-                    form={form}
                     className="register-form"
                     scrollToFirstError
                     onFinish={props.onFinish}
@@ -57,7 +56,7 @@ const Register: FC<RegisterProps> = ({
                                 message: `Min length is ${minLengthLogin}`
                             },
                             {
-                                pattern: /^[A-z-0-9-А-яЁё]*$/,
+                                pattern: loginInputPattern,
                                 message: `Don't use whitespace or symbols`
                             }
                         ]}
@@ -78,7 +77,7 @@ const Register: FC<RegisterProps> = ({
                                 message: `Min length is ${minLengthPassword}`
                             },
                             {
-                                pattern: /^[A-z-0-9]*$/,
+                                pattern: passwordInputPattern,
                                 message: `Don't use whitespace or symbols`
                             }
                         ]}
@@ -94,7 +93,7 @@ const Register: FC<RegisterProps> = ({
                                 message: 'Please input your full name'
                             },
                             {
-                                pattern: /^[A-zА-яЁё\s]*$/,
+                                pattern: fullNameInputPattern,
                                 message: `Don't use symbols or numbers`
                             }
                         ]}

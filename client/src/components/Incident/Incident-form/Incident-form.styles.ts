@@ -5,7 +5,7 @@ export const tailFormItemLayout = {
     wrapperCol: {
         xs: {
             span: 12,
-            offset: 10
+            offset: 9
         }
     }
 };

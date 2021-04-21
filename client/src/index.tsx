@@ -14,10 +14,3 @@ ReactDOM.render(
     </BrowserRouter>,
     document.getElementById('root')
 );
-
-declare global {
-    interface Window {
-        store: any;
-    }
-}
-window.store = store;

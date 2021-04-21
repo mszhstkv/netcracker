@@ -1,54 +1,53 @@
-import React, { FC, PropsWithChildren, ReactElement } from 'react';
+import React, { FC, PropsWithChildren, useMemo } from 'react';
 import { DatePicker, Form, Input, Select, Space } from 'antd';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { Users } from 'common/interfaces/interfaces';
 import {
-    BlockerSvg,
-    CriticalSvg,
-    MajorSvg,
-    MinorSvg,
-    NormalSvg
-} from 'common/icons/prioritiesIcons';
-import {
-    areas,
-    statuses
-} from 'components/Incident/Incident-form/area-and-status';
+    incidentAreasOptions,
+    incidentPriorityOptions,
+    incidentStatusesOptions,
+    maxTitleLength
+} from 'components/Incident/Incident-form/features/constants/incident.form.constants';
 import {
     IncidentFormButton,
     tailFormItemLayout,
     layout
 } from 'components/Incident/Incident-form/Incident-form.styles';
-import { IncidentFormProps } from 'components/Incident/Incident-form/interfaces/Incident-form.interface';
+import { IncidentFormProps } from 'components/Incident/Incident-form/features/interfaces/Incident-form.interface';
 
-const { Option } = Select;
 const { TextArea } = Input;
 
-let buttonText: string = '';
-
 const IncidentForm: FC<IncidentFormProps> = ({
-    ...props
+    disabledDate,
+    users,
+    onFinish,
+    incident
 }: PropsWithChildren<IncidentFormProps>) => {
-    const [form] = Form.useForm();
-
-    if (props.formName === 'create') {
-        buttonText = 'Create';
-    } else if (props.formName === 'edit') {
-        buttonText = 'Edit';
-    }
-
     let initialValuesForm = {
         incidentTitle: '',
         area: '',
         assignee: '',
-        startDate: '' as string | moment.Moment,
-        dueDate: '' as string | moment.Moment,
+        startDate: '' as string | Moment,
+        dueDate: '' as string | Moment,
         description: '',
         status: '',
         priority: ''
     };
 
-    if (props.incident !== undefined) {
-        initialValuesForm = { ...props.incident };
+    const incidentUsersOptions = useMemo(
+        () =>
+            users.map((user: Users) => {
+                const userValue = `${user.fullName} | ${user.login}`;
+                return {
+                    label: userValue,
+                    value: userValue
+                };
+            }),
+        [users]
+    );
+
+    if (incident !== undefined) {
+        initialValuesForm = { ...incident };
         initialValuesForm.dueDate = moment(initialValuesForm.dueDate);
         initialValuesForm.startDate = moment(initialValuesForm.startDate);
     } else {
@@ -57,12 +56,11 @@ const IncidentForm: FC<IncidentFormProps> = ({
 
     return (
         <Form
-            form={form}
             {...layout}
-            name={props.formName}
-            onFinish={props.onFinish}
+            name="incidentForm"
+            onFinish={onFinish}
             scrollToFirstError
-            initialValues={{ remember: true }}
+            initialValues={{ ...initialValuesForm }}
         >
             <Form.Item
                 name="incidentTitle"
@@ -74,56 +72,32 @@ const IncidentForm: FC<IncidentFormProps> = ({
                         whitespace: false
                     }
                 ]}
-                initialValue={initialValuesForm.incidentTitle}
             >
-                <TextArea allowClear showCount maxLength={50} />
+                <TextArea allowClear showCount maxLength={maxTitleLength} />
             </Form.Item>
-            <Form.Item
-                name="assignee"
-                label="Assignee"
-                initialValue={initialValuesForm.assignee}
-            >
-                <Select placeholder="Select assigner" allowClear>
-                    {props.users.map(
-                        (user: Users): ReactElement => {
-                            const userValue = `${user.fullName} | ${user.login}`;
-                            return (
-                                <Option key={user._id} value={userValue}>
-                                    {userValue}
-                                </Option>
-                            );
-                        }
-                    )}
-                </Select>
+            <Form.Item name="assignee" label="Assignee">
+                <Select
+                    placeholder="Select assigner"
+                    allowClear
+                    options={incidentUsersOptions}
+                />
             </Form.Item>
             <Form.Item
                 name="area"
                 label="Area"
                 rules={[{ required: true, message: 'Please select area' }]}
-                initialValue={initialValuesForm.area}
             >
-                <Select>
-                    {areas.map((area: string) => (
-                        <Option key={area} value={area}>
-                            {area}
-                        </Option>
-                    ))}
-                </Select>
+                <Select options={incidentAreasOptions} />
             </Form.Item>
-            <Form.Item
-                name="startDate"
-                label="Start date"
-                initialValue={initialValuesForm.startDate}
-            >
+            <Form.Item name="startDate" label="Start date">
                 <DatePicker disabled />
             </Form.Item>
             <Form.Item
                 name="dueDate"
                 label="Due date"
                 rules={[{ required: true, message: 'Please select due date' }]}
-                initialValue={initialValuesForm.dueDate}
             >
-                <DatePicker disabledDate={props.disabledDate} />
+                <DatePicker disabledDate={disabledDate} />
             </Form.Item>
             <Form.Item
                 name="description"
@@ -135,7 +109,6 @@ const IncidentForm: FC<IncidentFormProps> = ({
                         whitespace: true
                     }
                 ]}
-                initialValue={initialValuesForm.description}
             >
                 <TextArea allowClear />
             </Form.Item>
@@ -143,44 +116,20 @@ const IncidentForm: FC<IncidentFormProps> = ({
                 name="priority"
                 label="Priority"
                 rules={[{ required: true, message: 'Please select priority' }]}
-                initialValue={initialValuesForm.priority}
             >
-                <Select>
-                    <Option value="blocker">
-                        Blocker <BlockerSvg />
-                    </Option>
-                    <Option value="critical">
-                        Critical <CriticalSvg />
-                    </Option>
-                    <Option value="major">
-                        Major <MajorSvg />
-                    </Option>
-                    <Option value="normal">
-                        Normal <NormalSvg />
-                    </Option>
-                    <Option value="minor">
-                        Minor <MinorSvg />
-                    </Option>
-                </Select>
+                <Select options={incidentPriorityOptions} />
             </Form.Item>
             <Form.Item
                 name="status"
                 label="Status"
                 rules={[{ required: true, message: 'Please select status' }]}
-                initialValue={initialValuesForm.status}
             >
-                <Select>
-                    {statuses.map((status: string) => (
-                        <Option key={status} value={status}>
-                            {status}
-                        </Option>
-                    ))}
-                </Select>
+                <Select options={incidentStatusesOptions} />
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
                 <Space size="large">
                     <IncidentFormButton type="primary" htmlType="submit">
-                        {buttonText}
+                        Confirm
                     </IncidentFormButton>
                 </Space>
             </Form.Item>

@@ -9,36 +9,40 @@ import {
     headerLayoutTitle,
     headerLayoutLoginAndButton
 } from 'components/Header/Header.styles';
-import { HeaderProps } from 'components/Header/interfaces/Header.interfaces';
+import { HeaderProps } from 'components/Header/features/interfaces/Header.interfaces';
 
 const Header: FC<HeaderProps> = ({
-    ...props
-}: PropsWithChildren<HeaderProps>) => (
-    <StyledHeader>
-        <Row>
-            <Col {...headerLayoutTitle}>
-                <Title>
-                    <DatabaseFilled />
-                    Incident store
-                </Title>
-            </Col>
-            <Col {...headerLayoutLoginAndButton}>
-                {props.userLogin && (
-                    <Space size="large">
-                        <Text>{props.userLogin}</Text>
-                        <ButtonLogout
-                            ghost
-                            onClick={() => {
-                                props.logout();
-                            }}
-                        >
-                            Logout
-                        </ButtonLogout>
-                    </Space>
-                )}
-            </Col>
-        </Row>
-    </StyledHeader>
-);
+    userLogin,
+    logout
+}: PropsWithChildren<HeaderProps>) => {
+    console.log('hello');
+    return (
+        <StyledHeader>
+            <Row>
+                <Col {...headerLayoutTitle}>
+                    <Title>
+                        <DatabaseFilled />
+                        Incident store
+                    </Title>
+                </Col>
+                <Col {...headerLayoutLoginAndButton}>
+                    {userLogin && (
+                        <Space size="large">
+                            <Text>{userLogin}</Text>
+                            <ButtonLogout
+                                ghost
+                                onClick={() => {
+                                    logout();
+                                }}
+                            >
+                                Logout
+                            </ButtonLogout>
+                        </Space>
+                    )}
+                </Col>
+            </Row>
+        </StyledHeader>
+    );
+};
 
 export default Header;

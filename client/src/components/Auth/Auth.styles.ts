@@ -1,5 +1,5 @@
 import { Button, Typography } from 'antd';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
 export const layout = {
     labelCol: { span: 5, offset: 1 },
@@ -8,26 +8,6 @@ export const layout = {
         sm: { span: 15, offset: 1 }
     }
 };
-
-export const LoginForm = createGlobalStyle`
-&.login-form {
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 4px rgba(34, 60, 80, 0.2);
-}
-
-&.login-form_item_login {
-    padding-top: 10px;
-}
-
-&.login-form_title-icon {
-    color: #b07fb9;
-}
-
-&.login-form_register-link {
-    color: black;
-}
-`;
 
 export const loginLayout = {
     xs: { span: 24, offset: 0 },

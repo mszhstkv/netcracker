@@ -1,8 +1,12 @@
-export interface MapStateProps {
+interface MapStateProps {
     isAuthenticated: string | null;
 }
 
-export interface Props extends MapStateProps {}
+interface MapDispatchToProps {
+    setLoginDataAction: ({ userId, token, userLogin }: DataObject) => void;
+}
+
+export interface Props extends MapStateProps, MapDispatchToProps {}
 
 export interface DataObject {
     token: string | null;

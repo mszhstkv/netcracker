@@ -1,5 +1,5 @@
 import axios from 'axios';
-import moment from 'moment';
+import { Moment } from 'moment';
 import { Incidents, Users } from 'common/interfaces/interfaces';
 import {
     CreateData,
@@ -85,8 +85,8 @@ export const incidentAPI = {
         incidentTitle: string,
         assignee: string,
         area: string,
-        startDate: moment.Moment,
-        dueDate: moment.Moment,
+        startDate: Moment,
+        dueDate: Moment,
         description: string,
         priority: string,
         status: string

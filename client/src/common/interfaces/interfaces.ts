@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import moment from 'moment';
+import { Moment } from 'moment';
 
 export interface Incidents {
     _id: string;
@@ -14,27 +14,35 @@ export interface Incidents {
     priorityIcon: ReactElement;
 }
 
+export interface RegisterActionData {
+    login: string;
+    password: string;
+    fullName: string;
+    dateOfBirth: string;
+    position: string;
+}
+
 export interface CreateIncident {
     incidentTitle: string;
     assignee: string;
     area: string;
-    startDate: moment.Moment;
-    dueDate: moment.Moment;
+    startDate: Moment;
+    dueDate: Moment;
     description: string;
     priority: string;
     status: string;
 }
 
 export interface EditIncident {
-    _id: string,
-    incidentTitle: string,
-    assignee: string,
-    area: string,
-    startDate: moment.Moment,
-    dueDate: moment.Moment,
-    description: string,
-    priority: string,
-    status: string
+    _id: string;
+    incidentTitle: string;
+    assignee: string;
+    area: string;
+    startDate: Moment;
+    dueDate: Moment;
+    description: string;
+    priority: string;
+    status: string;
 }
 
 export interface Users {
