@@ -25,7 +25,7 @@ const start = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
-      useFindAndModify: true,
+      useFindAndModify: false,
     });
     app.listen(process.env.PORT || 5000, () =>
       console.log(`App has been started ...`)

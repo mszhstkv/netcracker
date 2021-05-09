@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { Moment } from 'moment';
-import { Incidents, Users } from 'common/interfaces/interfaces';
+import { Incidents, Users } from 'common/interfaces';
 import {
     CreateData,
     DeleteIncidentData,
@@ -8,6 +7,13 @@ import {
     LoginData,
     RegisterData
 } from 'api/api.interfaces';
+import { LoginActionPayload } from '../redux/actions/auth.actions';
+import {
+    CreateIncidentActionPayload,
+    DeleteIncidentActionPayload,
+    EditIncidentActionPayload
+} from '../redux/actions/incident.actions';
+import { RegisterActionPayload } from '../redux/actions/register.actions';
 
 type GetIncidentsDataType = Incidents[];
 type GetUsersDataType = Users[];
@@ -22,24 +28,14 @@ const instance = axios.create({
 });
 
 export const authAPI = {
-    register(
-        login: string,
-        password: string,
-        fullName: string,
-        dateOfBirth: string,
-        position: string
-    ) {
+    register(payload: RegisterActionPayload) {
         return instance.post<RegisterData>('/auth/register', {
-            login,
-            password,
-            fullName,
-            dateOfBirth,
-            position
+            ...payload
         });
     },
 
-    login(login: string, password: string) {
-        return instance.post<LoginData>('/auth/login', { login, password });
+    login(payload: LoginActionPayload) {
+        return instance.post<LoginData>('/auth/login', { ...payload });
     }
 };
 
@@ -50,25 +46,9 @@ export const usersAPI = {
 };
 
 export const incidentAPI = {
-    createIncident(
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: string,
-        dueDate: string,
-        description: string,
-        priority: string,
-        status: string
-    ) {
+    createIncident(payload: CreateIncidentActionPayload) {
         return instance.post<CreateData>('/incidents', {
-            incidentTitle,
-            assignee,
-            area,
-            startDate,
-            dueDate,
-            description,
-            priority,
-            status
+            ...payload
         });
     },
 
@@ -76,31 +56,13 @@ export const incidentAPI = {
         return instance.get<GetIncidentsDataType>('/incidents');
     },
 
-    deleteIncident(id: string) {
-        return instance.delete<DeleteIncidentData>(`/incidents/${id}`);
+    deleteIncident(payload: DeleteIncidentActionPayload) {
+        return instance.delete<DeleteIncidentData>(`/incidents/${payload.id}`);
     },
 
-    editIncident(
-        _id: string,
-        incidentTitle: string,
-        assignee: string,
-        area: string,
-        startDate: Moment,
-        dueDate: Moment,
-        description: string,
-        priority: string,
-        status: string
-    ) {
-        return instance.put<EditIncidentData>(`/incidents/${_id}`, {
-            _id,
-            incidentTitle,
-            assignee,
-            area,
-            startDate,
-            dueDate,
-            description,
-            priority,
-            status
+    editIncident(payload: EditIncidentActionPayload) {
+        return instance.put<EditIncidentData>(`/incidents/${payload._id}`, {
+            ...payload
         });
     }
 };

@@ -4,7 +4,7 @@ import {
     EditIncident,
     Incidents,
     Users
-} from 'common/interfaces/interfaces';
+} from 'common/interfaces';
 
 export const SET_USERS_DATA = 'SET_USERS_DATA';
 export const SET_INCIDENTS_DATA = 'SET_INCIDENTS_DATA';
@@ -47,8 +47,7 @@ interface SetIncidentIsLoadingAction {
     payload: SetIncidentIsLoadingActionPayload;
 }
 
-interface CreateIncidentAction {
-    type: typeof CREATE_INCIDENT_SEND;
+export interface CreateIncidentActionPayload {
     incidentTitle: string;
     assignee: string;
     area: string;
@@ -58,12 +57,8 @@ interface CreateIncidentAction {
     priority: string;
     status: string;
 }
-interface DeleteIncident {
-    type: typeof DELETE_INCIDENT_SEND;
-    id: string;
-}
-interface EditIncidentAction {
-    type: typeof EDIT_INCIDENT_SEND;
+
+export interface EditIncidentActionPayload {
     _id: string;
     incidentTitle: string;
     assignee: string;
@@ -73,6 +68,23 @@ interface EditIncidentAction {
     description: string;
     priority: string;
     status: string;
+}
+
+export interface DeleteIncidentActionPayload {
+    id: string;
+}
+
+interface CreateIncidentAction {
+    type: typeof CREATE_INCIDENT_SEND;
+    payload: CreateIncidentActionPayload;
+}
+interface DeleteIncidentAction {
+    type: typeof DELETE_INCIDENT_SEND;
+    payload: DeleteIncidentActionPayload;
+}
+interface EditIncidentAction {
+    type: typeof EDIT_INCIDENT_SEND;
+    payload: EditIncidentActionPayload;
 }
 
 export const setUsers = (users: Users[]): SetUsersAction => ({
@@ -103,18 +115,20 @@ export const createIncident = ({
     status
 }: CreateIncident): CreateIncidentAction => ({
     type: CREATE_INCIDENT_SEND,
-    incidentTitle,
-    assignee,
-    area,
-    startDate,
-    dueDate,
-    description,
-    priority,
-    status
+    payload: {
+        incidentTitle,
+        assignee,
+        area,
+        startDate,
+        dueDate,
+        description,
+        priority,
+        status
+    }
 });
-export const deleteIncident = (id: string): DeleteIncident => ({
+export const deleteIncident = (id: string): DeleteIncidentAction => ({
     type: DELETE_INCIDENT_SEND,
-    id
+    payload: { id }
 });
 export const editIncident = ({
     _id,
@@ -128,13 +142,15 @@ export const editIncident = ({
     status
 }: EditIncident): EditIncidentAction => ({
     type: EDIT_INCIDENT_SEND,
-    _id,
-    incidentTitle,
-    assignee,
-    area,
-    startDate,
-    dueDate,
-    description,
-    priority,
-    status
+    payload: {
+        _id,
+        incidentTitle,
+        assignee,
+        area,
+        startDate,
+        dueDate,
+        description,
+        priority,
+        status
+    }
 });

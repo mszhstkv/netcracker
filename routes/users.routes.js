@@ -6,7 +6,7 @@ const router = Router();
 // /api/users
 router.get("", async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({}, {"password": 0});
     return res.json(users);
   } catch (e) {
     res.status(500).json({ message: "Something goes wrong. Try again" });

@@ -32,7 +32,7 @@ router.post("", async (req, res) => {
 
     await incident.save();
 
-    return res.status(201).json({ message: "Incident has been created" });
+    return res.status(201).json({ message: "incidents has been created" });
   } catch (e) {
     res.status(500).json({ message: "Something goes wrong. Try again" });
   }
@@ -59,7 +59,7 @@ router.delete("/:id", async (req, res) => {
         console.log("Deleted : ", docs);
       }
     });
-    return res.json({ message: "Incident has been deleted" });
+    return res.json({ message: "incidents has been deleted" });
   } catch (e) {
     res.status(500).json({ message: "Something goes wrong. Try again" });
   }
@@ -90,10 +90,10 @@ router.put("/:id", jsonParser, async (req, res) => {
       status,
     };
 
-    await Incident.updateOne({ _id }, newIncident, { new: true }, function (err) {
+    await Incident.findByIdAndUpdate({ _id }, newIncident, { new: true }, function (err) {
       if (err) return res.status(500).json({ message: err });
     });
-    return res.json({ message: "Incident has been edited" });
+    return res.json({ message: "incidents has been edited" });
   } catch (e) {
     res.status(500).json({ message: "Something goes wrong. Try again" });
   }

@@ -37,10 +37,14 @@ interface SetLogoutDataActionPayload {
     userLogin: null;
 }
 
-interface LoginAction {
-    type: typeof LOGIN_DATA_SEND;
+export interface LoginActionPayload {
     login: string;
     password: string;
+}
+
+interface LoginAction {
+    type: typeof LOGIN_DATA_SEND;
+    payload: LoginActionPayload;
 }
 
 interface Logout {
@@ -75,8 +79,7 @@ export const setLogoutData = (): SetLogoutDataAction => ({
 
 export const postLogin = (login: string, password: string): LoginAction => ({
     type: LOGIN_DATA_SEND,
-    login,
-    password
+    payload: { login, password }
 });
 
 export const logout = (): Logout => ({ type: LOGOUT });

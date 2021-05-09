@@ -5,30 +5,24 @@ import {
     SET_USER_DATA
 } from 'redux/actions/auth.actions';
 
-const initState = {
-    userId: null as string | null,
-    token: null as string | null,
-    userLogin: null as string | null,
+interface InitState {
+    userId: string | null;
+    token: string | null;
+    userLogin: string | null;
+    loginIsLoading: boolean;
+}
+
+const initState: InitState = {
+    userId: null,
+    token: null,
+    userLogin: null,
     loginIsLoading: false
 };
 
-export type InitialStateType = typeof initState;
-
-const authReducer = (
-    state = initState,
-    action: ActionsType
-): InitialStateType => {
+const authReducer = (state = initState, action: ActionsType): InitState => {
     switch (action.type) {
         case SET_USER_DATA:
-            return {
-                ...state,
-                ...action.payload
-            };
         case LOGIN_DATA_LOADING:
-            return {
-                ...state,
-                ...action.payload
-            };
         case SET_LOGOUT_DATA:
             return {
                 ...state,

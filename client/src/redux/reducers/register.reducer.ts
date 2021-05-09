@@ -4,23 +4,19 @@ import {
     SET_FROM_REGISTER
 } from 'redux/actions/register.actions';
 
-const initState = {
+interface InitState {
+    fromRegister: boolean;
+    registerIsLoading: boolean;
+}
+
+const initState: InitState = {
     fromRegister: false,
     registerIsLoading: false
 };
 
-export type InitialStateType = typeof initState;
-
-const registerReducer = (
-    state = initState,
-    action: ActionsType
-): InitialStateType => {
+const registerReducer = (state = initState, action: ActionsType): InitState => {
     switch (action.type) {
         case SET_FROM_REGISTER:
-            return {
-                ...state,
-                ...action.payload
-            };
         case REGISTER_DATA_LOADING:
             return {
                 ...state,

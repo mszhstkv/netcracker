@@ -1,4 +1,4 @@
-import { Incidents, Users } from 'common/interfaces/interfaces';
+import { Incidents, Users } from 'common/interfaces';
 import {
     ActionsType,
     INCIDENT_DATA_LOADING,
@@ -6,29 +6,22 @@ import {
     SET_USERS_DATA
 } from 'redux/actions/incident.actions';
 
-const initState = {
-    users: [] as Users[],
-    incidents: [] as Incidents[],
+interface InitState {
+    users: Users[];
+    incidents: Incidents[];
+    incidentIsLoading: boolean;
+}
+
+const initState: InitState = {
+    users: [],
+    incidents: [],
     incidentIsLoading: false
 };
 
-export type InitialStateType = typeof initState;
-
-const incidentReducer = (
-    state = initState,
-    action: ActionsType
-): InitialStateType => {
+const incidentReducer = (state = initState, action: ActionsType): InitState => {
     switch (action.type) {
         case SET_USERS_DATA:
-            return {
-                ...state,
-                ...action.payload
-            };
         case SET_INCIDENTS_DATA:
-            return {
-                ...state,
-                ...action.payload
-            };
         case INCIDENT_DATA_LOADING:
             return {
                 ...state,
