@@ -16,7 +16,7 @@ const RegisterContainer: FC<RegisterContainerProps> = memo(
         fromRegister
     }: PropsWithChildren<RegisterContainerProps>) => {
         const onFinish = useCallback(
-            () => (values: RegisterOnFinish): void => {
+            (values: RegisterOnFinish): void => {
                 registerAction({
                     ...values
                 });

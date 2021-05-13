@@ -16,18 +16,15 @@ const AuthContainer: FC<AuthContainerProps> = memo(
         setFromRegisterAction
     }: PropsWithChildren<AuthContainerProps>) => {
         const onFinish = useCallback(
-            () => (values: OnFinish): void => {
+            (values: OnFinish): void => {
                 postLoginAction(values.login, values.password);
             },
             [postLoginAction]
         );
 
-        const fromRegisterReset = useCallback(
-            () => (): void => {
-                setFromRegisterAction(false);
-            },
-            [setFromRegisterAction]
-        );
+        const fromRegisterReset = useCallback((): void => {
+            setFromRegisterAction(false);
+        }, [setFromRegisterAction]);
 
         return (
             <Auth

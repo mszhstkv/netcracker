@@ -19,7 +19,7 @@ const EditIncident: FC<EditIncidentProps> = memo(
         incidentInfo
     }: PropsWithChildren<EditIncidentProps>) => {
         const onFinish = useCallback(
-            () => (values: EditIncidentOnFinish): void => {
+            (values: EditIncidentOnFinish): void => {
                 editIncidentAction({
                     ...values,
                     _id: incidentInfo._id,

@@ -21,7 +21,7 @@ const CreateIncident: FC<CreateIncidentProps> = memo(
         users
     }: PropsWithChildren<CreateIncidentProps>) => {
         const onFinish = useCallback(
-            () => (values: CreateIncidentOnFinish): void => {
+            (values: CreateIncidentOnFinish): void => {
                 const startDate: Moment = moment().utc(true);
                 createIncidentAction({
                     ...values,
