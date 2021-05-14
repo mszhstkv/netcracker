@@ -1,15 +1,15 @@
-const User = require('../models/User');
-const {Router} = require('express');
+const User = require("../models/User");
+const { Router } = require("express");
 
 const router = Router();
 
-// /api/users/allUsers
-router.get('/allUsers', async (req, res) => {
+// /api/users
+router.get("", async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({}, {"password": 0});
     return res.json(users);
   } catch (e) {
-    res.status(500).json({message: 'Something goes wrong. Try again'});
+    res.status(500).json({ message: "Something goes wrong. Try again" });
   }
 });
 

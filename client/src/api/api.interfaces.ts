@@ -1,19 +1,22 @@
-export interface ILoginData {
+export interface LoginData {
     userId: string;
     userLogin: string;
     token: string;
 }
-export interface IRegisterData {
+export interface RegisterData {
     message: string;
 }
 
-export interface ICreateData {
+export interface CreateData {
     message: string;
 }
 
-export interface IDeleteIncidentData {
+export interface DeleteIncidentData {
     message: string;
 }
-export interface IEditIncidentData {
+
+export interface EditIncidentData {
     message: string;
 }
+
+
